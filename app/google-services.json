@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "480302698004",
+    "firebase_url": "https://eventatpoe-default-rtdb.firebaseio.com",
+    "project_id": "eventatpoe",
+    "storage_bucket": "eventatpoe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:480302698004:android:189e78b5d062fff7d86101",
+        "android_client_info": {
+          "package_name": "za.co.varsitycollage.st10050487.eventat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLWRUFF1fMwTqcgdsVL0oOxDcpNkIWaIM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:480302698004:android:67ad22cdf2b81d7fd86101",
+        "android_client_info": {
+          "package_name": "za.co.varsitycollage.st10050487.eventatpoe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLWRUFF1fMwTqcgdsVL0oOxDcpNkIWaIM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
