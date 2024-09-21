@@ -21,6 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Adding the DisplayBiometricActivity to the manifest -->
+        <activity android:name=".DisplayBioMetric" />
+        <activity android:name=".GoogleMapsAPI" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_crash_reporting_api_key" />
     </application>
 
 </manifest>
