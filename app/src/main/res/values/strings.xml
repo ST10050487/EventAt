@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">EventAt</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="supporting_1">Springboks vs\u00A0All Blacks</string>
+    <string name="supporting_2">Address: DHL Stadium</string>
+    <string name="supporting_3">Date: Sept 7th</string>
+    <string name="supporting_4">Time: 17h00\n</string>
+    <string name="supporting_5">Weather: Most likely Clear Sky or Cloudy.\n</string>
+    <string name="supporting_6">Max Participants : 10,000 only</string>
+    <string name="supporting_7">Starting From</string>
+    <string name="buy_ticket">Buy ticket</string>
 </resources>
