@@ -1,21 +1,20 @@
 package za.co.varsitycollage.st10050487.eventat
 
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import za.co.varsitycollage.st10050487.eventat.Fragments.InfoEvent
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-
-        // Add the InfoEvent fragment to the activity
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction().apply {
-                setReorderingAllowed(true)
-                add(R.id.fragment_info_event, InfoEvent())
-                commit()
-            }
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
         }
     }
 }
