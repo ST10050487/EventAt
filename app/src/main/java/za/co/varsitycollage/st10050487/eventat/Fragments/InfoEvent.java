@@ -7,11 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import za.co.varsitycollage.st10050487.eventat.R;
 
 public class InfoEvent extends Fragment {
@@ -41,7 +39,7 @@ public class InfoEvent extends Fragment {
 
                 // Use FragmentManager to replace the current fragment with ChoosingTicketStage
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.event_info, choosingTicketStage);
+                transaction.replace(R.id.fragment_EventInfo_container, choosingTicketStage);
                 transaction.addToBackStack(null); // Add to back stack to allow back navigation
                 transaction.commit();
             }

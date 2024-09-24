@@ -1,3 +1,12 @@
+import com.android.build.gradle.internal.res.LinkApplicationAndroidResourcesTask
+import com.android.build.gradle.tasks.MergeResources
+
+buildscript {
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.0.0")
+    }
+}
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -51,18 +60,17 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    //Responsive Design for the Images/views
+    implementation("com.intuit.sdp:sdp-android:1.1.1")
+
+    //Resposive Design for the text view
+    implementation("com.intuit.ssp:ssp-android:1.1.1")
     // Add the Biometric library dependency
     implementation("androidx.biometric:biometric:1.2.0-alpha05")
     // Import the Firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:33.2.0"))
-    // TODO: Add the dependencies for Firebase products you want to use
-    // When using the BoM, don't specify versions in Firebase dependencies
+    // Add the dependencies for Firebase products you want to use
     implementation("com.google.firebase:firebase-analytics")
-    implementation(libs.firebase.auth)
-    // Add the dependency for the Cloud Storage library
-    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-storage")
-    // Add the dependency for the Cloud Storage library
-    // When NOT using the BoM, you must specify versions in Firebase library dependencies
-    implementation("com.google.firebase:firebase-storage:21.0.0")
 }
