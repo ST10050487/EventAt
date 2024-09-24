@@ -24,7 +24,7 @@ class GoogleMapsAPI : AppCompatActivity(), OnMapReadyCallback {
 
         // Initializing APIs of Places Places
         if (!Places.isInitialized()) {
-            Places.initialize(applicationContext, getString(R.string.google_app_id))
+            Places.initialize(applicationContext, getString(R.string.MAPS_KEY))
         }
 
         // Initialize Map Fragment
