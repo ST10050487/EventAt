@@ -41,7 +41,7 @@ public class InfoEvent extends Fragment {
 
                 // Use FragmentManager to replace the current fragment with ChoosingTicketStage
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.event_info, choosingTicketStage);
+                transaction.replace(R.id.fragment_EventInfo_container, choosingTicketStage);
                 transaction.addToBackStack(null); // Add to back stack to allow back navigation
                 transaction.commit();
             }

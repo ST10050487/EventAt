@@ -1,20 +1,23 @@
 package za.co.varsitycollage.st10050487.eventat;
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import za.co.varsitycollage.st10050487.eventat.Fragments.InfoEvent;
 
-public class EventInfoBooking {
-    private View eventInfoView;
+public class EventInfoBooking extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_event_info_booking);
 
-    public void createEventInfoView(Context context) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        eventInfoView = inflater.inflate(R.layout.fragment_info_event, new ConstraintLayout(context), false);
-    }
-
-    public View getEventInfoView() {
-        return eventInfoView;
+        // Load the InfoEvent fragment
+        if (savedInstanceState == null) {
+            Fragment infoEventFragment = new InfoEvent();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_EventInfo_container, infoEventFragment);
+            transaction.commit();
+        }
     }
 }
