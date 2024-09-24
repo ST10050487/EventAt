@@ -28,6 +28,10 @@ android {
         }
     }
 
+    buildFeatures {
+        viewBinding = true
+    }
+    
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -71,4 +75,7 @@ dependencies {
 
     // Kotlin script runtime
     implementation(kotlin("script-runtime"))
+    //Implementing material design dependency
+    implementation("com.google.android.material:material:1.9.0")
+
 }
