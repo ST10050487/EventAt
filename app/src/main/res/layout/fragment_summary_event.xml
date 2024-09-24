@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.SummaryEvent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/arrowButton"
+            android:layout_width="@dimen/_48sdp"
+            android:layout_height="@dimen/_47sdp"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:background="@drawable/arrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/EventTitle"
+            android:layout_width="211dp"
+            android:layout_height="73dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:letterSpacing="0.03"
+            android:lineSpacingExtra="-2sp"
+            android:text="Springboks vs Blackcaps"
+            android:textAppearance="@style/supporting_"
+            android:textSize="@dimen/_20ssp"
+            android:textStyle="bold"
+            tools:ignore="missingConstraints"
+            tools:layout_editor_absoluteX="100dp"
+            tools:layout_editor_absoluteY="50dp" />
+
+        <ImageView
+            android:id="@+id/EventImage"
+            android:layout_width="362dp"
+            android:layout_height="166dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="152dp"
+            android:background="@drawable/springbox"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/EventitleInfo"
+            android:layout_width="300dp"
+            android:layout_height="32dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="-2sp"
+            android:text="Springboks vs Blackcaps"
+            android:textAppearance="@style/supporting_"
+            tools:ignore="missingConstraints"
+            tools:layout_editor_absoluteX="31dp"
+            tools:layout_editor_absoluteY="354dp" />
+
+        <ImageView
+            android:id="@+id/Calendervector"
+            android:layout_width="22dp"
+            android:layout_height="26dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/date"
+            tools:ignore="missingConstraints"
+            tools:layout_editor_absoluteX="31dp"
+            tools:layout_editor_absoluteY="413dp" />
+
+        <ImageView
+            android:id="@+id/ClockVector"
+            android:layout_width="22dp"
+            android:layout_height="26dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/clock"
+            tools:ignore="missingConstraints"
+            tools:layout_editor_absoluteX="31dp"
+            tools:layout_editor_absoluteY="460dp" />
+
+        <ImageView
+            android:id="@+id/CashVector"
+            android:layout_width="27dp"
+            android:layout_height="26dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/cash"
+            tools:ignore="missingConstraints"
+            tools:layout_editor_absoluteX="32dp"
+            tools:layout_editor_absoluteY="508dp" />
+
+        <TextView
+            android:id="@+id/EventDate"
+            android:layout_width="176dp"
+            android:layout_height="31dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_vertical"
+            android:letterSpacing="0.04"
+            android:lineSpacingExtra="4sp"
+            android:text="Sat, 7th September"
+            android:textAppearance="@style/supporting_"
+            android:textColor="@color/purple"
+            android:textSize="12sp"
+            tools:ignore="missingConstraints"
+            tools:layout_editor_absoluteX="64dp"
+            tools:layout_editor_absoluteY="413dp" />
+
+        <TextView
+            android:id="@+id/EventTime"
+            android:layout_width="176dp"
+            android:layout_height="31dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_vertical"
+            android:letterSpacing="0.04"
+            android:lineSpacingExtra="4sp"
+            android:text="17:00 pm"
+            android:textAppearance="@style/supporting_"
+            android:textColor="@color/purple"
+            android:textSize="12sp"
+            tools:ignore="missingConstraints"
+            tools:layout_editor_absoluteX="64dp"
+            tools:layout_editor_absoluteY="460dp" />
+
+        <TextView
+            android:id="@+id/EventPrice"
+            android:layout_width="176dp"
+            android:layout_height="31dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_vertical"
+            android:letterSpacing="0.04"
+            android:lineSpacingExtra="4sp"
+            android:text="R350"
+            android:textAppearance="@style/supporting_"
+            android:textColor="@color/purple"
+            android:textSize="12sp"
+            tools:ignore="missingConstraints"
+            tools:layout_editor_absoluteX="64dp"
+            tools:layout_editor_absoluteY="508dp" />
+
+        <FrameLayout
+            android:id="@+id/Ticketview"
+            android:layout_width="315dp"
+            android:layout_height="307dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/rectangleshape"
+            tools:ignore="missingConstraints"
+            tools:layout_editor_absoluteX="53dp"
+            tools:layout_editor_absoluteY="554dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="89dp"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/ticketstageinfo"
+                    android:layout_width="189dp"
+                    android:layout_height="41dp"
+                    android:layout_weight="5"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center_vertical"
+                    android:lineHeight="20sp"
+                    android:lineSpacingExtra="4sp"
+                    android:text="D block (Superior)"
+                    android:textAppearance="@style/supporting_" />
+
+                <TextView
+                    android:id="@+id/supporting_"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="sans-serif"
+                    android:gravity="center_vertical"
+                    android:lineHeight="20sp"
+                    android:lineSpacingExtra="4sp"
+                    android:text="R350"
+                    android:textAppearance="@style/supporting_"
+                    tools:ignore="missingConstraints" />
+
+            </LinearLayout>
+
+
+            <FrameLayout
+                android:id="@+id/couponView"
+                android:layout_width="316dp"
+                android:layout_height="64dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="150dp"
+                android:background="@drawable/rectangleshape">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/group_72"
+                        android:layout_width="29dp"
+                        android:layout_height="29dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:src="@drawable/coupon" />
+
+                    <TextView
+                        android:id="@+id/ApplyCoupon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center_vertical"
+                        android:lineSpacingExtra="0sp"
+                        android:text="Apply Coupon"
+                        android:textAppearance="@style/supporting_" />
+
+                    <Button
+                        android:id="@+id/arrow"
+                        android:layout_width="25dp"
+                        android:layout_height="33dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/rightarrow" />
+
+                </RelativeLayout>
+
+            </FrameLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="16dp"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:lineSpacingExtra="-1sp"
+                    android:text="Total Price"
+                    android:textAppearance="@style/supporting_" />
+
+                <TextView
+                    android:id="@+id/totalAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:lineSpacingExtra="-1sp"
+                    android:text="R 400"
+                    android:textAppearance="@style/supporting_" />
+
+            </RelativeLayout>
+
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/EventSubmitButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/continuue_b"
+            android:text="Next"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Ticketview" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
