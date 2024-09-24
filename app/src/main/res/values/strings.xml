@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">EventAt</string>
+    <string name="MAPS_KEY">AIzaSyA0cwP4K96EoVriVgzQtC-NSJySWzLIEAE</string>
+    <string name="book_ticket">Book Ticket</string>
+    <string name="supporting_7" />
+    <string name="buy_ticket" />
+
 </resources>
