@@ -60,6 +60,12 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.storage)
 
+    //Responsive Design for the Images/views
+    implementation("com.intuit.sdp:sdp-android:1.1.1")
+
+    //Resposive Design for the text view
+    implementation("com.intuit.ssp:ssp-android:1.1.1")
+
     // Biometric authentication
     implementation("androidx.biometric:biometric:1.2.0-alpha05")
 
