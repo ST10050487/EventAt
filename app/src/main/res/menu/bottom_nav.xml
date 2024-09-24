@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Home"
+        android:id="@+id/homeBtn"
+        android:icon="@drawable/ic_home_icon"/>
+    <item android:title="My Event"
+        android:id="@+id/MyEventsBtn"
+        android:icon="@drawable/ic_book_mark_icon"/>
+    <item android:title="Create Event"
+        android:id="@+id/CreateEventsBtn"
+        android:icon="@drawable/ic_create_event_icon"/>
+    <item android:title="Profile"
+        android:id="@+id/ProfileBtn"
+        android:icon="@drawable/ic_person_icon"/>
+</menu>

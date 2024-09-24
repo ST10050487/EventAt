@@ -36,5 +36,6 @@
         <activity android:name=".DisplayBioMetric"/>
         <activity android:name=".BioMetricPromptManager"/>
         <activity android:name=".EventInfoBooking"/>
+        <activity android:name=".Home"/>
     </application>
 </manifest>
