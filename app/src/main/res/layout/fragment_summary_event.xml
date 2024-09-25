@@ -22,8 +22,9 @@
 
         <TextView
             android:id="@+id/EventTitle"
-            android:layout_width="211dp"
-            android:layout_height="73dp"
+            android:layout_width="@dimen/_211sdp"
+            android:layout_height="@dimen/_73sdp"
+            android:layout_marginTop="@dimen/_40sdp"
             android:gravity="center_horizontal|center_vertical"
             android:letterSpacing="0.03"
             android:lineSpacingExtra="-2sp"
@@ -31,159 +32,136 @@
             android:textAppearance="@style/supporting_"
             android:textSize="@dimen/_20ssp"
             android:textStyle="bold"
-            tools:ignore="missingConstraints"
-            tools:layout_editor_absoluteX="100dp"
-            tools:layout_editor_absoluteY="50dp" />
-
-        <ImageView
-            android:id="@+id/EventImage"
-            android:layout_width="362dp"
-            android:layout_height="166dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="152dp"
-            android:background="@drawable/springbox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.565"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/EventImage"
+            android:layout_width="355dp"
+            android:layout_height="181dp"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_48sdp"
+            android:background="@drawable/springbox"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/EventTitle" />
+
         <TextView
             android:id="@+id/EventitleInfo"
-            android:layout_width="300dp"
-            android:layout_height="32dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
+            android:layout_width="@dimen/_300sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginTop="@dimen/_16sdp"
             android:gravity="center_vertical"
             android:lineSpacingExtra="-2sp"
             android:text="Springboks vs Blackcaps"
             android:textAppearance="@style/supporting_"
-            tools:ignore="missingConstraints"
-            tools:layout_editor_absoluteX="31dp"
-            tools:layout_editor_absoluteY="354dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/EventImage" />
 
         <ImageView
             android:id="@+id/Calendervector"
-            android:layout_width="22dp"
-            android:layout_height="26dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_26sdp"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_16sdp"
             android:src="@drawable/date"
-            tools:ignore="missingConstraints"
-            tools:layout_editor_absoluteX="31dp"
-            tools:layout_editor_absoluteY="413dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/EventitleInfo" />
 
         <ImageView
             android:id="@+id/ClockVector"
-            android:layout_width="22dp"
-            android:layout_height="26dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_26sdp"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_16sdp"
             android:src="@drawable/clock"
-            tools:ignore="missingConstraints"
-            tools:layout_editor_absoluteX="31dp"
-            tools:layout_editor_absoluteY="460dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Calendervector" />
 
         <ImageView
             android:id="@+id/CashVector"
-            android:layout_width="27dp"
-            android:layout_height="26dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
+            android:layout_width="@dimen/_27sdp"
+            android:layout_height="@dimen/_26sdp"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_12sdp"
             android:src="@drawable/cash"
-            tools:ignore="missingConstraints"
-            tools:layout_editor_absoluteX="32dp"
-            tools:layout_editor_absoluteY="508dp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ClockVector" />
 
         <TextView
             android:id="@+id/EventDate"
-            android:layout_width="176dp"
-            android:layout_height="31dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
+            android:layout_width="@dimen/_176sdp"
+            android:layout_height="@dimen/_31sdp"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_4sdp"
             android:gravity="center_vertical"
             android:letterSpacing="0.04"
-            android:lineSpacingExtra="4sp"
+            android:lineSpacingExtra="@dimen/_4ssp"
             android:text="Sat, 7th September"
             android:textAppearance="@style/supporting_"
             android:textColor="@color/purple"
-            android:textSize="12sp"
-            tools:ignore="missingConstraints"
-            tools:layout_editor_absoluteX="64dp"
-            tools:layout_editor_absoluteY="413dp" />
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintStart_toEndOf="@id/Calendervector"
+            app:layout_constraintTop_toTopOf="@id/Calendervector" />
 
         <TextView
             android:id="@+id/EventTime"
-            android:layout_width="176dp"
-            android:layout_height="31dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
+            android:layout_width="@dimen/_176sdp"
+            android:layout_height="@dimen/_31sdp"
+            android:layout_marginStart="@dimen/_28sdp"
             android:gravity="center_vertical"
             android:letterSpacing="0.04"
             android:lineSpacingExtra="4sp"
             android:text="17:00 pm"
             android:textAppearance="@style/supporting_"
             android:textColor="@color/purple"
-            android:textSize="12sp"
-            tools:ignore="missingConstraints"
-            tools:layout_editor_absoluteX="64dp"
-            tools:layout_editor_absoluteY="460dp" />
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintStart_toEndOf="@id/ClockVector"
+            app:layout_constraintTop_toTopOf="@id/ClockVector" />
 
         <TextView
             android:id="@+id/EventPrice"
-            android:layout_width="176dp"
-            android:layout_height="31dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
+            android:layout_width="@dimen/_176sdp"
+            android:layout_height="@dimen/_31sdp"
+            android:layout_marginStart="40dp"
             android:gravity="center_vertical"
             android:letterSpacing="0.04"
-            android:lineSpacingExtra="4sp"
+            android:lineSpacingExtra="@dimen/_4ssp"
             android:text="R350"
             android:textAppearance="@style/supporting_"
             android:textColor="@color/purple"
-            android:textSize="12sp"
-            tools:ignore="missingConstraints"
-            tools:layout_editor_absoluteX="64dp"
-            tools:layout_editor_absoluteY="508dp" />
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintStart_toEndOf="@id/CashVector"
+            app:layout_constraintTop_toTopOf="@id/CashVector" />
 
         <FrameLayout
             android:id="@+id/Ticketview"
-            android:layout_width="315dp"
-            android:layout_height="307dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+            android:layout_width="397dp"
+            android:layout_height="353dp"
+            android:layout_marginTop="@dimen/_16sdp"
             android:background="@drawable/rectangleshape"
-            tools:ignore="missingConstraints"
-            tools:layout_editor_absoluteX="53dp"
-            tools:layout_editor_absoluteY="554dp">
-
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/EventPrice">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="89dp"
+                android:layout_height="@dimen/_89sdp"
                 android:orientation="horizontal"
-                android:padding="16dp">
+                android:padding="@dimen/_16sdp">
 
                 <TextView
                     android:id="@+id/ticketstageinfo"
-                    android:layout_width="189dp"
-                    android:layout_height="41dp"
-                    android:layout_weight="5"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_weight="1"
                     android:fontFamily="sans-serif"
                     android:gravity="center_vertical"
-                    android:lineHeight="20sp"
-                    android:lineSpacingExtra="4sp"
+                    android:lineHeight="@dimen/_20ssp"
+                    android:lineSpacingExtra="@dimen/_4ssp"
                     android:text="D block (Superior)"
                     android:textAppearance="@style/supporting_" />
 
@@ -192,24 +170,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="@dimen/_16sdp"
                     android:fontFamily="sans-serif"
                     android:gravity="center_vertical"
-                    android:lineHeight="20sp"
-                    android:lineSpacingExtra="4sp"
+                    android:lineHeight="@dimen/_20ssp"
+                    android:lineSpacingExtra="@dimen/_4ssp"
                     android:text="R350"
                     android:textAppearance="@style/supporting_"
                     tools:ignore="missingConstraints" />
 
             </LinearLayout>
 
-
             <FrameLayout
                 android:id="@+id/couponView"
-                android:layout_width="316dp"
-                android:layout_height="64dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="150dp"
+                android:layout_width="@dimen/_316sdp"
+                android:layout_height="@dimen/_64sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_100sdp"
                 android:background="@drawable/rectangleshape">
 
                 <RelativeLayout
@@ -218,11 +195,11 @@
 
                     <ImageView
                         android:id="@+id/group_72"
-                        android:layout_width="29dp"
-                        android:layout_height="29dp"
+                        android:layout_width="@dimen/_29sdp"
+                        android:layout_height="@dimen/_29sdp"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:src="@drawable/coupon" />
 
                     <TextView
@@ -236,12 +213,12 @@
                         android:textAppearance="@style/supporting_" />
 
                     <Button
-                        android:id="@+id/arrow"
-                        android:layout_width="25dp"
+                        android:id="@+id/Couponarrow"
+                        android:layout_width="@dimen/_25sdp"
                         android:layout_height="33dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginRight="@dimen/_10sdp"
                         android:background="@drawable/rightarrow" />
 
                 </RelativeLayout>
@@ -274,7 +251,7 @@
                     android:layout_centerVertical="true"
                     android:gravity="center_vertical"
                     android:lineSpacingExtra="-1sp"
-                    android:text="R 400"
+                    android:text="R 350"
                     android:textAppearance="@style/supporting_" />
 
             </RelativeLayout>
@@ -285,19 +262,17 @@
             android:id="@+id/EventSubmitButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="44dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginStart="@dimen/_32sdp"
+            android:layout_marginTop="@dimen/_44sdp"
+            android:layout_marginEnd="@dimen/_32sdp"
             android:background="@drawable/continuue_b"
             android:text="Next"
             android:textColor="@color/white"
-            android:textSize="15sp"
+            android:textSize="@dimen/_15ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/Ticketview" />
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
