@@ -218,7 +218,7 @@
                         android:layout_height="33dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_30sdp"
                         android:background="@drawable/rightarrow" />
 
                 </RelativeLayout>
