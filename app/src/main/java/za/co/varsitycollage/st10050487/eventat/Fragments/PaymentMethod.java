@@ -27,7 +27,12 @@ public class PaymentMethod extends Fragment {
         View view = inflater.inflate(R.layout.fragment_payment_method, container, false);
 
         // Find the cardarrowButton and set an OnClickListener
-        return SendingToAddCardFragment(view);
+        SendingToAddCardFragment(view);
+
+        // Set up navigation for the cash arrow button
+        setupCashNavigation(view);
+
+        return view;
     }
 
     private @NonNull View SendingToAddCardFragment(View view) {
@@ -48,5 +53,21 @@ public class PaymentMethod extends Fragment {
         });
 
         return view;
+    }
+
+    private void setupCashNavigation(View view) {
+        // Find the cash arrow button and set a click listener
+        Button cashArrowButton = view.findViewById(R.id.CasharrowButton);
+        cashArrowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate to PaymentOnVenue fragment
+                Fragment paymentOnVenueFragment = new PaymentOnVenue();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_EventInfo_container, paymentOnVenueFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
     }
 }

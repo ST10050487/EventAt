@@ -2,7 +2,6 @@ package za.co.varsitycollage.st10050487.eventat.Fragments;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -14,23 +13,28 @@ import android.widget.Toast;
 
 import za.co.varsitycollage.st10050487.eventat.R;
 
-public class ticketDownload extends Fragment {
 
-    public ticketDownload() {
+public class PaymentOnVenue extends Fragment {
+
+
+    public PaymentOnVenue() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_ticket_download, container, false);
+        View view = inflater.inflate(R.layout.fragment_payment_on_venue, container, false);
 
         // Set up navigation for the arrow button to Payment Success
         setupNavigation(view);
 
+
         // Set up the download button to show a Toast message
         setupDownloadButton(view);
+
 
         return view;
     }
@@ -42,9 +46,9 @@ public class ticketDownload extends Fragment {
             @Override
             public void onClick(View v) {
                 // Navigate to PaymentSuccessful fragment
-                Fragment paymentSuccessfulFragment = new PaymentSuccessful();
+                Fragment paymentMethodFragment = new PaymentMethod();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_EventInfo_container, paymentSuccessfulFragment);
+                transaction.replace(R.id.fragment_EventInfo_container, paymentMethodFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
@@ -62,4 +66,5 @@ public class ticketDownload extends Fragment {
             }
         });
     }
+
 }

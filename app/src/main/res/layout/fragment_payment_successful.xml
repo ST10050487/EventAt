@@ -40,7 +40,6 @@
         android:layout_marginTop="@dimen/_8sdp"
         android:gravity="center"
         android:lineSpacingExtra="-5sp"
-        android:text="Order ID: 124450"
         android:textAppearance="@style/supporting_"
         android:textColor="#5F19F2"
         android:textSize="@dimen/_32ssp"
