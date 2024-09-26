@@ -1,24 +1,23 @@
 package za.co.varsitycollage.st10050487.eventat.Fragments
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.RadioButton
+import android.widget.Spinner
+import android.widget.TextView
+import androidx.fragment.app.Fragment
 import za.co.varsitycollage.st10050487.eventat.R
+import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+const val ARG_PARAM1 = "param1"
+const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CreateEvent.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CreateEvent : Fragment() {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
@@ -34,20 +33,115 @@ class CreateEvent : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_event, container, false)
+        // Inflating the layout for this fragment
+        val view = inflater.inflate(R.layout.fragment_create_event, container, false)
+
+        // Finding the TextView for event date
+        val eventDateTextView: TextView = view.findViewById(R.id.event_date)
+        // Finding the TextViews for start and end times
+        val startTimeTextView = view.findViewById<TextView>(R.id.start_time)
+        val endTimeTextView = view.findViewById<TextView>(R.id.end_time)
+        // Finding the EditTexts for ticket prices
+        val ticketPriceEditText = view.findViewById<TextView>(R.id.ticket_price)
+        val ticketPriceAtVenueEditText = view.findViewById<TextView>(R.id.ticket_price_at_venue)
+        // Finding the RadioButtons for paid and free events
+        val paidEventRadioButton = view.findViewById<RadioButton>(R.id.paid_event)
+        val payAtEventRadioButton = view.findViewById<RadioButton>(R.id.pay_at_event)
+        val freeEventRadioButton = view.findViewById<RadioButton>(R.id.free_event)
+
+        // Setting up the Spinner for event categories
+        val eventCategorySpinner: Spinner = view.findViewById(R.id.event_category)
+        val categories = arrayOf("Select Category","Conference", "Workshop", "Webinar", "Meetup", "Social", "Sports", "Music", "Art", "Festival")
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categories)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        eventCategorySpinner.adapter = adapter
+
+        // Setting up an OnClickListener to show DatePickerDialog when the TextView is clicked
+        eventDateTextView.setOnClickListener {
+            showDatePickerDialog(eventDateTextView)
+        }
+        // Setting onClickListeners to show TimePickerDialog when Start Time is clicked
+        startTimeTextView.setOnClickListener {
+            showTimePickerDialog(startTimeTextView)
+        }
+        // Setting onClickListeners to show TimePickerDialog when End Time is clicked
+        endTimeTextView.setOnClickListener {
+            showTimePickerDialog(endTimeTextView)
+        }
+        // Disabling EditTexts based on RadioButton selection
+        freeEventRadioButton.setOnClickListener {
+            if (freeEventRadioButton.isChecked) {
+                ticketPriceEditText.isEnabled = false
+                ticketPriceAtVenueEditText.isEnabled = false
+                ticketPriceAtVenueEditText.text = ""
+                ticketPriceEditText.text = ""
+                paidEventRadioButton.isChecked = false
+                payAtEventRadioButton.isChecked = false
+            }
+        }
+        // Enabling EditTexts based on RadioButton selection
+        paidEventRadioButton.setOnClickListener {
+            if (paidEventRadioButton.isChecked) {
+                ticketPriceEditText.isEnabled = true
+                ticketPriceEditText.requestFocus()
+                freeEventRadioButton.isChecked = false
+            }
+        }
+        // Enabling EditTexts based on RadioButton selection
+        payAtEventRadioButton.setOnClickListener {
+            if (payAtEventRadioButton.isChecked) {
+                ticketPriceAtVenueEditText.isEnabled = true
+                ticketPriceAtVenueEditText.requestFocus()
+                freeEventRadioButton.isChecked = false
+            }
+        }
+
+        return view
+    }
+
+    // A function to display DatePickerDialog and set the selected date in the TextView
+    private fun showDatePickerDialog(eventDateTextView: TextView) {
+        // Use the current date as the default date in the picker
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        // Create a new instance of DatePickerDialog and set the date when picked
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            { _, selectedYear, selectedMonth, selectedDay ->
+                // Update the TextView with the selected date
+                val formattedDate = "${selectedDay.toString().padStart(2, '0')}/${(selectedMonth + 1).toString().padStart(2, '0')}/$selectedYear"
+                eventDateTextView.text = formattedDate
+            },
+            year, month, day
+        )
+        // Show the DatePickerDialog
+        datePickerDialog.show()
+    }
+
+    // Function to display TimePickerDialog and set the selected time in the TextView
+    private fun showTimePickerDialog(timeTextView: TextView) {
+        // Use the current time as the default time in the picker
+        val calendar = Calendar.getInstance()
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+
+        // Create and show TimePickerDialog
+        val timePickerDialog = TimePickerDialog(
+            requireContext(),
+            { _, selectedHour, selectedMinute ->
+                // Format the time as HH:MM and set it in the TextView
+                val formattedTime = String.format("%02d:%02d", selectedHour, selectedMinute)
+                timeTextView.text = formattedTime
+            },
+            hour, minute, true
+        )
+        timePickerDialog.show()
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CreateEvent.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             CreateEvent().apply {
@@ -58,3 +152,5 @@ class CreateEvent : Fragment() {
             }
     }
 }
+
+
