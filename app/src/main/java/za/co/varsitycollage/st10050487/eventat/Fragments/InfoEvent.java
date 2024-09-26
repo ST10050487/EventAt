@@ -26,9 +26,32 @@ public class InfoEvent extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_info_event, container, false);
+        SendingToEventPromotion(view);
+        SendingBtnToTicketStage(view);
 
-        return SendingBtnToTicketStage(view);
+        return view;
+
+
     }
+
+    private void SendingToEventPromotion(View view) {
+        // Set up the share button to navigate to EventPromotion
+        Button shareButton = view.findViewById(R.id.share_icon);
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an instance of EventPromotion fragment
+                EventPromotion eventPromotion = new EventPromotion();
+
+                // Use FragmentManager to replace the current fragment with EventPromotion
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_EventInfo_container, eventPromotion);
+                transaction.addToBackStack(null); // Add to back stack to allow back navigation
+                transaction.commit();
+            }
+        });
+    }
+
 
     private @NonNull View SendingBtnToTicketStage(View view) {
         Button ticketSubmitButton = view.findViewById(R.id.EventSubmitButton);

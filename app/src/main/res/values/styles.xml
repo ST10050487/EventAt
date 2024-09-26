@@ -25,4 +25,9 @@
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">#FFFFFF</item>
     </style>
+
+    <style name="RoundedCorners">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/_35sdp</item>
+    </style>
 </resources>

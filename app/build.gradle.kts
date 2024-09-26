@@ -64,6 +64,8 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.storage)
 
+    implementation("com.google.android.material:material:1.4.0")
+
     //Responsive Design for the Images/views
     implementation("com.intuit.sdp:sdp-android:1.1.1")
 
