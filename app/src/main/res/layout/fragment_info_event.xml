@@ -31,8 +31,8 @@
 
         <TextView
             android:id="@+id/EventTitle"
-            android:layout_width="@dimen/_154sdp"
-            android:layout_height="@dimen/_78sdp"
+            android:layout_width="196dp"
+            android:layout_height="104dp"
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_8sdp"
@@ -47,12 +47,23 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/EventImage" />
 
-        <ImageView
+        <Button
             android:id="@+id/share_icon"
             android:layout_width="@dimen/_24sdp"
             android:layout_height="@dimen/_24sdp"
             android:layout_marginEnd="@dimen/_76sdp"
-            android:src="@drawable/share"
+            android:background="@drawable/share"
+            app:layout_constraintBottom_toBottomOf="@id/EventTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/EventTitle"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/save_icon"
+            android:layout_width="@dimen/_24sdp"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_marginEnd="24dp"
+            android:src="@drawable/save"
             app:layout_constraintBottom_toBottomOf="@id/EventTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/EventTitle"
@@ -73,6 +84,34 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/EventTitle" />
+
+        <Button
+            android:id="@+id/Directions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/noto_sans"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="6sp"
+            android:padding="0dp"
+            android:text="\t\t\tDirections"
+            android:textAppearance="@style/supporting_"
+            android:textColor="#ADADAD"
+            android:textSize="@dimen/_15ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/DirectionIcon"
+            app:layout_constraintTop_toBottomOf="@id/EventTitle" />
+
+        <ImageView
+            android:id="@+id/DirectionIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/direction"
+            app:layout_constraintBottom_toBottomOf="@id/Directions"
+            app:layout_constraintEnd_toStartOf="@id/Directions"
+            app:layout_constraintTop_toTopOf="@id/Directions" />
 
         <TextView
             android:id="@+id/EventPrice"
@@ -171,8 +210,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_32sdp"
-            android:layout_marginEnd="@dimen/_32sdp"
             android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_32sdp"
             android:background="@drawable/continuue_b"
             android:text="Buy Ticket"
             android:textColor="@color/white"
