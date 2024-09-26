@@ -77,5 +77,6 @@ dependencies {
     implementation(kotlin("script-runtime"))
     //Implementing material design dependency
     implementation("com.google.android.material:material:1.9.0")
-
+    // Checking for the latest version
+    implementation("com.google.android.material:material:1.8.0")
 }
