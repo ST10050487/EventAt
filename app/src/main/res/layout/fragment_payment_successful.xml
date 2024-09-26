@@ -1,0 +1,100 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".Fragments.PaymentSuccessful">
+
+    <ImageView
+        android:id="@+id/SuccessIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="148dp"
+        android:background="@drawable/success"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/SuccessMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:gravity="center"
+        android:lineSpacingExtra="-5sp"
+        android:text="Payment Successfull!"
+        android:textAppearance="@style/supporting_"
+        android:textColor="#5F19F2"
+        android:textSize="@dimen/_32ssp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/SuccessIcon" />
+
+    <TextView
+        android:id="@+id/OrderID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:gravity="center"
+        android:lineSpacingExtra="-5sp"
+        android:text="Order ID: 124450"
+        android:textAppearance="@style/supporting_"
+        android:textColor="#5F19F2"
+        android:textSize="@dimen/_32ssp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/SuccessMessage" />
+
+    <TextView
+        android:id="@+id/Ticketmessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:gravity="center"
+        android:lineSpacingExtra="@dimen/_3ssp"
+        android:text="Tickets has been mailed\n via email"
+        android:textAppearance="@style/supporting_"
+        android:textColor="#7A797C"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/OrderID" />
+
+    <Button
+        android:id="@+id/go_to_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:lineSpacingExtra="-6sp"
+        android:padding="0dp"
+        android:text="Go to home"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/_15ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Ticketmessage" />
+
+    <Button
+        android:id="@+id/DownloadTicketButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_32sdp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="@dimen/_32sdp"
+        android:background="@drawable/continuue_b"
+        android:text="Download Ticket"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_15ssp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/go_to_home" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
