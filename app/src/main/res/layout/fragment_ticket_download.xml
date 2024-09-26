@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.ticketDownload">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/EventHeading"
+            android:layout_width="293dp"
+            android:layout_height="59dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:lineSpacingExtra="-7sp"
+            android:text="Springbok vs Blackcaps"
+            android:textAppearance="@style/supporting_"
+            android:textColor="@color/purple"
+            android:textSize="@dimen/_20ssp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/arrowButton"
+            android:layout_width="@dimen/_33sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/arrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/EventImage"
+            android:layout_width="355dp"
+            android:layout_height="181dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="@dimen/_48sdp"
+            android:background="@drawable/springbox"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/EventHeading"
+            app:shapeAppearanceOverlay="@style/RoundedCorners" />
+
+        <ImageView
+            android:id="@+id/Calendervector"
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_26sdp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/EventImage" />
+
+        <ImageView
+            android:id="@+id/ClockVector"
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_26sdp"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:src="@drawable/clock"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/Calendervector" />
+
+        <TextView
+            android:id="@+id/EventDate"
+            android:layout_width="@dimen/_176sdp"
+            android:layout_height="@dimen/_31sdp"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:gravity="center_vertical"
+            android:letterSpacing="0.04"
+            android:lineSpacingExtra="@dimen/_4ssp"
+            android:text="Sat, 7th September"
+            android:textAppearance="@style/supporting_"
+            android:textColor="@color/purple"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintStart_toEndOf="@id/Calendervector"
+            app:layout_constraintTop_toTopOf="@id/Calendervector" />
+
+        <TextView
+            android:id="@+id/EventTime"
+            android:layout_width="@dimen/_176sdp"
+            android:layout_height="@dimen/_31sdp"
+            android:layout_marginStart="@dimen/_28sdp"
+            android:gravity="center_vertical"
+            android:letterSpacing="0.04"
+            android:lineSpacingExtra="4sp"
+            android:text="17:00 pm"
+            android:textAppearance="@style/supporting_"
+            android:textColor="@color/purple"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintStart_toEndOf="@id/ClockVector"
+            app:layout_constraintTop_toTopOf="@id/ClockVector" />
+
+        <TextView
+            android:id="@+id/TicketHeading"
+            android:layout_width="157dp"
+            android:layout_height="34dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal|center_vertical"
+            android:lineSpacingExtra="-7sp"
+            android:text="Ticket"
+            android:textAppearance="@style/supporting_"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="109dp"
+            tools:layout_editor_absoluteY="481dp" />
+
+        <ImageView
+            android:id="@+id/QRCodeImage"
+            android:layout_width="223dp"
+            android:layout_height="223dp"
+            android:layout_marginStart="88dp"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/qrcode"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/TicketHeading" />
+
+        <TextView
+            android:id="@+id/supporting_"
+            android:layout_width="405dp"
+            android:layout_height="37dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="80dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:lineSpacingExtra="-12sp"
+            android:text="Paid ZAR 350"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textcolor="@color/purple"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/QRCodeImage" />
+
+        <Button
+            android:id="@+id/MakeTicketButton"
+            android:layout_width="409dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/continuue_b"
+            android:text="Make Payment"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.58"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/supporting_" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
