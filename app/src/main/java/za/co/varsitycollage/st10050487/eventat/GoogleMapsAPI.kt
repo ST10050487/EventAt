@@ -1,8 +1,14 @@
 package za.co.varsitycollage.st10050487.eventat
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -13,9 +19,6 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
-import android.util.Log
-import androidx.core.content.ContextCompat
-import androidx.core.app.ActivityCompat
 
 class GoogleMapsAPI : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var googleMap: GoogleMap
@@ -50,8 +53,16 @@ class GoogleMapsAPI : AppCompatActivity(), OnMapReadyCallback {
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
                     // Optionally, add a marker at the selected location
                     googleMap.addMarker(MarkerOptions().position(latLng).title(place.name))
+
+                    // Return the selected location to CreateEvent
+                    val resultIntent = Intent().apply {
+                        putExtra("selected_location", place.name)
+                    }
+                    setResult(RESULT_OK, resultIntent)
+                    finish() // Close the GoogleMapsAPI activity
                 }
             }
+
 
             override fun onError(status: com.google.android.gms.common.api.Status) {
                 Log.e("GoogleMapsAPI", "An error occurred: $status")
@@ -63,23 +74,18 @@ class GoogleMapsAPI : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun requestLocationPermissions() {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 LOCATION_PERMISSION_REQUEST_CODE)
-        } else {
-            // Permissions are already granted, you can access location
-            if (::googleMap.isInitialized) {
-                enableMyLocation()
-            } else {
-                // Map is not initialized yet, enableMyLocation will be called in onMapReady
-            }
         }
+        // No need to call enableMyLocation here
     }
 
+    @SuppressLint("MissingPermission")
     private fun enableMyLocation() {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED) {
             googleMap.isMyLocationEnabled = true
         }
@@ -89,13 +95,9 @@ class GoogleMapsAPI : AppCompatActivity(), OnMapReadyCallback {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             LOCATION_PERMISSION_REQUEST_CODE -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    // Permission granted, enable location functionality
-                    if (::googleMap.isInitialized) {
-                        enableMyLocation()
-                    } else {
-                        Log.e("GoogleMapsAPI", "GoogleMap is not initialized yet.")
-                    }
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission granted
+                    enableMyLocation()
                 } else {
                     // Permission denied, handle accordingly
                     Log.e("GoogleMapsAPI", "Location permission denied")
@@ -109,6 +111,8 @@ class GoogleMapsAPI : AppCompatActivity(), OnMapReadyCallback {
         // Set default location (optional)
         val defaultLocation = LatLng(-34.0, 151.0)
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 10f))
+        // Enabling location layer
         enableMyLocation()
     }
 }
+
