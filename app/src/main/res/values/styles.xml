@@ -20,6 +20,18 @@
         <item name="android:fontFamily">@font/noto_sans_bold</item>
     </style>
 
+    <style name="supporting_1">
+        <item name="android:textSize">13sp</item>
+        <item name="android:letterSpacing">0.04</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="supporting_2">
+        <item name="android:textSize">10sp</item>
+        <item name="android:letterSpacing">0.05</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
     <style name="buy_ticket">
         <item name="android:fontFamily">@font/noto_sans</item>
         <item name="android:textSize">13sp</item>
