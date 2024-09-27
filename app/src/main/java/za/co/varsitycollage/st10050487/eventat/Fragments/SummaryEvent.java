@@ -28,7 +28,27 @@ public class SummaryEvent extends Fragment {
         // Find the arrowButton and set an OnClickListener
         view = MovingToStageMethod(view);
 
+        // Find the couponarrow button and set an OnClickListener
+        view = MovingToCoupon(view);
+
         return MovingToPayment(view);
+    }
+
+    private @NonNull View MovingToCoupon(View view) {
+        Button couponArrowButton = view.findViewById(R.id.Couponarrow);
+        couponArrowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate to ApplyCoupon fragment
+                Fragment applyCouponFragment = new ApplyCoupon();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_EventInfo_container, applyCouponFragment);
+                transaction.addToBackStack(null); // Add to back stack to allow back navigation
+                transaction.commit();
+            }
+        });
+
+        return view;
     }
 
     private @NonNull View MovingToPayment(View view) {
