@@ -3,6 +3,7 @@ package za.co.varsitycollage.st10050487.eventat.Fragments
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -255,15 +256,31 @@ class CreateEvent : Fragment() {
 
     private fun saveEventToFirebase() {
         // Gather event details from UI elements
-        val eventName = view?.findViewById<EditText>(R.id.event_name)?.text.toString()
+        val eventNameEditText = view?.findViewById<EditText>(R.id.event_name)
+        val eventName = eventNameEditText?.text.toString()
         val eventDate = eventDateTextView.text.toString()
-        val startTime = view?.findViewById<TextView>(R.id.start_time)?.text.toString()
-        val endTime = view?.findViewById<TextView>(R.id.end_time)?.text.toString()
-        val eventCategory = view?.findViewById<Spinner>(R.id.event_category)?.selectedItem.toString()
+        val startTimeTextView = view?.findViewById<TextView>(R.id.start_time)
+        val startTime = startTimeTextView?.text.toString()
+        val endTimeTextView = view?.findViewById<TextView>(R.id.end_time)
+        val endTime = endTimeTextView?.text.toString()
+        val eventCategorySpinner = view?.findViewById<Spinner>(R.id.event_category)
+        val eventCategory = eventCategorySpinner?.selectedItem.toString()
         val eventLocation = eventLocationTextView.text.toString()
-        val ticketPrice = view?.findViewById<TextView>(R.id.ticket_price)?.text.toString()
-        val ticketPriceAtVenue = view?.findViewById<TextView>(R.id.ticket_price_at_venue)?.text.toString()
-        val isPaidEvent = view?.findViewById<RadioButton>(R.id.paid_event)?.isChecked == true
+        val freeEventRadioButton = view?.findViewById<RadioButton>(R.id.free_event)
+        val paidEventRadioButton = view?.findViewById<RadioButton>(R.id.paid_event)
+        val payAtEventRadioButton = view?.findViewById<RadioButton>(R.id.pay_at_event)
+        val ticketPriceTextEditText = view?.findViewById<EditText>(R.id.ticket_price)
+        val tickPrice = ticketPriceTextEditText?.text.toString()
+        val ticketPriceAtVenueEditText = view?.findViewById<EditText>(R.id.ticket_price_at_venue)
+        val ticketPriceAtVenue = ticketPriceAtVenueEditText?.text.toString()
+
+        // Checking if all required fields are filled
+        if (!validateInputs(eventNameEditText, eventName, startTimeTextView, startTime, endTimeTextView, endTime,
+                eventDateTextView, eventDate, eventLocationTextView, eventLocation, eventCategorySpinner, eventCategory,
+                freeEventRadioButton,  paidEventRadioButton, payAtEventRadioButton, ticketPriceTextEditText, tickPrice,
+                ticketPriceAtVenueEditText, ticketPriceAtVenue)) {
+            return
+        }
 
         // Create Event object
         val event = Event(
@@ -272,20 +289,15 @@ class CreateEvent : Fragment() {
             startTime = startTime,
             endTime = endTime,
             category = eventCategory,
-            location = eventLocation,
-            ticketPrice = ticketPrice,
-            ticketPriceAtVenue = ticketPriceAtVenue,
-            isPaidEvent = isPaidEvent
+            location = eventLocation
         )
 
-        // Push event to Firebase Database
+        // Proceed with saving the event (Firebase logic follows here)
         val eventId = database.child("events").push().key
         if (eventId != null) {
-            // Upload image and get the download URL
+            // Uploading image and video logic here
             uploadImageAndGetUrl(eventId) { imageUrl ->
-                // Upload video and get the download URL
                 uploadVideoAndGetUrl(eventId) { videoUrl ->
-                    // Save event with URLs to Firebase Database
                     event.imageUrl = imageUrl
                     event.videoUrl = videoUrl
                     database.child("events").child(eventId).setValue(event)
@@ -301,9 +313,212 @@ class CreateEvent : Fragment() {
         }
     }
 
+    //A function to validate the input fields
+    private fun validateInputs(
+        eventNameEditText: EditText?,
+        eventName: String,
+        startTimeTextView: TextView?,
+        startTime: String,
+        endTimeTextView: TextView?,
+        endTime: String,
+        eventDateTextView: TextView?,
+        eventDate: String,
+        eventLocationTextView: TextView?,
+        eventLocation: String,
+        eventCategorySpinner: Spinner?,
+        eventCategory: String,
+        freeEventRadioButton: RadioButton?,
+        paidEventRadioButton: RadioButton?,
+        payAtEventRadioButton: RadioButton?,
+        ticketPriceTextEditText: EditText?,
+        tickPrice : String,
+        ticketPriceAtVenueEditText: EditText?,
+        ticketPriceAtVenue: String
+    ): Boolean {
+        var isValid = true
+
+        // Checking event name
+        if (eventName.isEmpty()) {
+            eventNameEditText?.error = "Event name is required"
+            isValid = false
+        }
+
+        // Checking start time
+        if (startTime.isEmpty()) {
+            startTimeTextView?.error = "Start time is required"
+            isValid = false
+        }
+
+        // Checking end time
+        if (endTime.isEmpty()) {
+            endTimeTextView?.error = "End time is required"
+            isValid = false
+        }
+        // Checking event date
+        if (eventDate.isEmpty()) {
+            eventDateTextView?.error = "Event date is required"
+            isValid = false
+        }
+        // Checking event location
+        if(eventLocation.isEmpty()) {
+            eventLocationTextView?.error = "Event location is required"
+            isValid = false
+        }
+        // Checking event category
+        if (eventCategory == "Select Category") {
+            eventCategorySpinner?.let {
+                (it.selectedView as TextView).error = "Please select an event category"
+            }
+            Toast.makeText(requireContext(), "Please select an event category", Toast.LENGTH_SHORT).show()
+            isValid = false
+        }
+        // Checking if the user has selected an image
+        if (imageUri == null) {
+            val toast = Toast.makeText(requireContext(), "Please select an image", Toast.LENGTH_SHORT)
+            // Getting the Toast view
+            val view = toast.view
+            // Finding the TextView within the Toast (Toast uses a TextView to display the message)
+            val text = view?.findViewById<TextView>(android.R.id.message)
+            // Setting the text color to red
+            text?.setTextColor(Color.RED)
+            // Showing the error message
+            toast.show()
+
+            isValid = false
+        }
+        // Checking if a user has selected a free event radio button or a paid event radio button or a pay at event radio button
+        if (!(freeEventRadioButton?.isChecked ?: false) &&
+            !(paidEventRadioButton?.isChecked ?: false) &&
+            !(payAtEventRadioButton?.isChecked ?: false)) {
+
+            val toast = Toast.makeText(requireContext(), "Please select an event type", Toast.LENGTH_SHORT)
+            // Getting the Toast view
+            val view = toast.view
+            // Finding the TextView within the Toast (Toast uses a TextView to display the message)
+            val text = view?.findViewById<TextView>(android.R.id.message)
+            // Setting the text color to red
+            text?.setTextColor(Color.RED)
+            // Showing the error message
+            toast.show()
+
+            isValid = false
+        }
+        // Checking if the price is entered for paid event if the paid event radio button is selected
+        if (paidEventRadioButton?.isChecked == true && tickPrice.isEmpty()) {
+            ticketPriceTextEditText?.error = "Ticket price is required"
+            isValid = false
+        }
+        // Checking if the price is entered for pay at event if the pay at event radio button is selected
+        if (payAtEventRadioButton?.isChecked == true && ticketPriceAtVenue.isEmpty()) {
+            ticketPriceAtVenueEditText?.error = "Ticket price is required"
+            isValid = false
+        }
+
+
+        // Clear error when user starts typing
+        eventNameEditText?.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) eventNameEditText.error = null
+        }
+        startTimeTextView?.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) startTimeTextView.error = null
+        }
+        endTimeTextView?.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) endTimeTextView.error = null
+        }
+        eventDateTextView?.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) eventDateTextView.error = null
+        }
+        eventDateTextView?.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) eventDateTextView.error = null
+        }
+        eventLocationTextView?.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) eventLocationTextView.error = null
+        }
+        eventCategorySpinner?.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) (eventCategorySpinner.selectedView as TextView).error = null
+        }
+        freeEventRadioButton?.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) freeEventRadioButton.error = null
+        }
+        paidEventRadioButton?.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) paidEventRadioButton.error = null
+        }
+        payAtEventRadioButton?.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) payAtEventRadioButton.error = null
+        }
+        ticketPriceTextEditText?.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) ticketPriceTextEditText.error = null
+        }
+        ticketPriceAtVenueEditText?.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) ticketPriceAtVenueEditText.error = null
+        }
+        freeEventRadioButton?.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                // Clear errors when free event is selected
+                ticketPriceTextEditText?.error = null
+                ticketPriceAtVenueEditText?.error = null
+            }
+        }
+
+
+        return isValid
+    }
+
+    // Helper function to show error on TextView
+    private fun showError(textView: TextView, errorMessage: String) {
+        textView.error = errorMessage
+        textView.setTextColor(Color.RED)
+    }
+
+    // Helper function to clear errors when inputs are focused
+    private fun setupClearErrors(
+        eventNameEditText: EditText?,
+        startTimeTextView: TextView?,
+        endTimeTextView: TextView?,
+        eventDateTextView: TextView?,
+        eventLocationTextView: TextView?,
+        eventCategorySpinner: Spinner?
+    ) {
+        eventNameEditText?.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) eventNameEditText.error = null
+        }
+
+        startTimeTextView?.setOnClickListener {
+            startTimeTextView.error = null
+        }
+
+        endTimeTextView?.setOnClickListener {
+            endTimeTextView.error = null
+        }
+
+        eventDateTextView?.setOnClickListener {
+            eventDateTextView.error = null
+        }
+
+        eventLocationTextView?.setOnClickListener {
+            eventLocationTextView.error = null
+        }
+
+        eventCategorySpinner?.let {
+            (it.selectedView as? TextView)?.setOnClickListener {
+                (it as TextView).error = null
+            }
+        }
+    }
+
+    // Helper function to show a red toast message
+    private fun showToast(message: String) {
+        val toast = Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT)
+        val view = toast.view
+        val text = view?.findViewById<TextView>(android.R.id.message)
+        text?.setTextColor(Color.RED)
+        toast.show()
+    }
+
+
     private fun uploadImageAndGetUrl(eventId: String, onComplete: (String?) -> Unit) {
         imageUri?.let { uri ->
-            val imageRef = storageRef.child("events/$eventId/image.jpg") // Define your storage path
+            val imageRef = storageRef.child("events/$eventId/image.jpg")
             imageRef.putFile(uri)
                 .addOnSuccessListener {
                     imageRef.downloadUrl.addOnSuccessListener { downloadUrl ->
@@ -319,7 +534,7 @@ class CreateEvent : Fragment() {
 
     private fun uploadVideoAndGetUrl(eventId: String, onComplete: (String?) -> Unit) {
         videoUri?.let { uri ->
-            val videoRef = storageRef.child("events/$eventId/video.mp4") // Define your storage path
+            val videoRef = storageRef.child("events/$eventId/video.mp4")
             videoRef.putFile(uri)
                 .addOnSuccessListener {
                     videoRef.downloadUrl.addOnSuccessListener { downloadUrl ->
