@@ -20,11 +20,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <View
+        <ImageView
             android:id="@+id/EventImage"
             android:layout_width="@dimen/_411sdp"
             android:layout_height="@dimen/_265sdp"
-            android:background="@drawable/springbox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

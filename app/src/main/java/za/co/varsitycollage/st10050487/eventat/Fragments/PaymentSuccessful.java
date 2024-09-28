@@ -1,5 +1,6 @@
 package za.co.varsitycollage.st10050487.eventat.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import java.util.Random;
 
+import za.co.varsitycollage.st10050487.eventat.Home;
 import za.co.varsitycollage.st10050487.eventat.R;
 
 public class PaymentSuccessful extends Fragment {
@@ -69,12 +71,9 @@ public class PaymentSuccessful extends Fragment {
         goToHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navigate to HomeScreen fragment
-                Fragment homeScreenFragment = new HomeScreen();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_EventInfo_container, homeScreenFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                // Navigate to Home activity
+                Intent intent = new Intent(getActivity(), Home.class);
+                startActivity(intent);
             }
         });
 
