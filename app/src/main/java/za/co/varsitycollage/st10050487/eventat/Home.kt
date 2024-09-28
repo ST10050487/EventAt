@@ -25,7 +25,7 @@ class Home : AppCompatActivity() {
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.MyEventsBtn -> {
-                    replaceFragment(CreateEvent())
+                    replaceFragment(MyEventsFragment())
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.CreateEventsBtn -> {
@@ -33,7 +33,7 @@ class Home : AppCompatActivity() {
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.ProfileBtn -> {
-                    replaceFragment(CreateEvent())
+                    replaceFragment(Profile())
                     return@setOnNavigationItemSelectedListener true
                 }
                 else -> {
