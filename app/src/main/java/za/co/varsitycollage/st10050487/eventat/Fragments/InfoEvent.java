@@ -37,7 +37,8 @@ public class InfoEvent extends Fragment {
     private TextView eventTitle, eventPrice, eventDate, eventAddress, eventTime, eventParticipants, eventWeather;
     private DatabaseReference databaseReference;
     private ImageView eventImage;
-    public static final double BASE_PRICE = 350;
+    public static double BASE_PRICE;
+    public static Boolean PAID_EVENT;
 
     public InfoEvent() {
         // Required empty public constructor
@@ -76,7 +77,7 @@ public class InfoEvent extends Fragment {
     }
 
     private void fetchEventData() {
-        databaseReference.child("-O7soerp9IfLh4K99WfU").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("-O7tP1MbKi9yovRb9WiM").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -86,15 +87,24 @@ public class InfoEvent extends Fragment {
                     String startTime = dataSnapshot.child("startTime").getValue(String.class);
                     String ticketPrice = dataSnapshot.child("ticketPrice").getValue(String.class);
                     String imageUrl = dataSnapshot.child("imageUrl").getValue(String.class);
+                    String participants = dataSnapshot.child("attendents").getValue(String.class);
+                    Boolean paidEvent = dataSnapshot.child("paidEvent").getValue(Boolean.class);
+
+                    // Check if the event is paid or if the ticket price is null/empty
+                    if (paidEvent == null || !paidEvent || ticketPrice == null || ticketPrice.isEmpty()) {
+                        eventPrice.setText("Free");
+                        PAID_EVENT = false;
+                    } else {
+                        eventPrice.setText("R" + ticketPrice);
+                        BASE_PRICE = Double.parseDouble(ticketPrice);
+                    }
 
                     // Update UI with the retrieved data
                     eventTitle.setText(name);
                     eventDate.setText("Date: " + date);
                     eventAddress.setText("Address: " + location);
                     eventTime.setText("Time: " + startTime);
-//                    eventPrice.setText("R" + ticketPrice);
-                    eventPrice.setText("R450");
-                    eventParticipants.setText("Participants: " + "1000");
+                    eventParticipants.setText("Participants: " + participants);
 
                     // Set the image using Glide
                     if (imageUrl != null && !imageUrl.isEmpty()) {

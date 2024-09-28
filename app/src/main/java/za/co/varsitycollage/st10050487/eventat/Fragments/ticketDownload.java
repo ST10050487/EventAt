@@ -25,7 +25,7 @@ import za.co.varsitycollage.st10050487.eventat.R;
 
 public class ticketDownload extends Fragment {
     private DatabaseReference databaseReference;
-    private TextView eventHeading, eventDate, eventTime;
+    private TextView eventHeading, eventDate, eventTime, eventPrice;
     private ImageView eventImage;
 
     public ticketDownload() {
@@ -46,6 +46,7 @@ public class ticketDownload extends Fragment {
         eventDate = view.findViewById(R.id.EventDate);
         eventTime = view.findViewById(R.id.EventTime);
         eventImage = view.findViewById(R.id.EventImage);
+        eventPrice = view.findViewById(R.id.stage_price);
 
         // Fetch event data from Firebase
         fetchEventData();
@@ -61,7 +62,7 @@ public class ticketDownload extends Fragment {
 
 
     private void fetchEventData() {
-        databaseReference.child("-O7keyPNnAoXE4R6d5kj").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("-O7tO1M1ex8AumOmI3sU").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -69,6 +70,14 @@ public class ticketDownload extends Fragment {
                     String date = dataSnapshot.child("date").getValue(String.class);
                     String time = dataSnapshot.child("startTime").getValue(String.class);
                     String imageUrl = dataSnapshot.child("imageUrl").getValue(String.class);
+
+                    Boolean paidEvent = InfoEvent.PAID_EVENT; // Assuming PAID_EVENT is a static variable in InfoEvent
+                    if (paidEvent == null || !paidEvent) {
+                        eventPrice.setText("Price: Free");
+                    } else {
+                        int stageprice = SummaryEvent.FinalPrice;
+                        eventPrice.setText("Price: ZAR " + stageprice);
+                    }
 
                     // Update UI with the retrieved data
                     eventHeading.setText(heading);

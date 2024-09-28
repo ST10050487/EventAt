@@ -57,22 +57,34 @@ public class PaymentMethod extends Fragment {
 
         return view;
     }
+
     private @NonNull View SendingToAddCardFragment(View view) {
         // Find the cardarrowButton and set an OnClickListener
         Button cardarrowButton = view.findViewById(R.id.CardarrowButton);
-        cardarrowButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create an instance of the Addcard fragment
-                Fragment addCardFragment = new Addcard();
 
-                // Replace the current fragment with the Addcard fragment
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_EventInfo_container, addCardFragment);
-                transaction.addToBackStack(null); // Add to back stack to allow back navigation
-                transaction.commit();
-            }
-        });
+        // Check if the event is paid or free
+        Boolean paidEvent = InfoEvent.PAID_EVENT;
+        if (paidEvent == null || !paidEvent) {
+            // If the event is free, disable the card payment button and show a Toast message
+            cardarrowButton.setEnabled(false);
+            Toast.makeText(getContext(), "No card needed", Toast.LENGTH_SHORT).show();
+        } else {
+            // If the event is paid, enable the card payment button and set the click listener
+            cardarrowButton.setEnabled(true);
+            cardarrowButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Create an instance of the Addcard fragment
+                    Fragment addCardFragment = new Addcard();
+
+                    // Replace the current fragment with the Addcard fragment
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragment_EventInfo_container, addCardFragment);
+                    transaction.addToBackStack(null); // Add to back stack to allow back navigation
+                    transaction.commit();
+                }
+            });
+        }
 
         return view;
     }

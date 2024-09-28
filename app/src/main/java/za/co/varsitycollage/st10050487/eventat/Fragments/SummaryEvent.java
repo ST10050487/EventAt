@@ -1,7 +1,9 @@
 // SummaryEvent.java
 package za.co.varsitycollage.st10050487.eventat.Fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,14 +30,14 @@ public class SummaryEvent extends Fragment {
     private BlockInfoViewModel blockInfoViewModel;
     private DatabaseReference databaseReference;
     private ImageView eventImage;
+    public static int FinalPrice;
 
     public SummaryEvent() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_summary_event, container, false);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("events");
@@ -54,7 +56,7 @@ public class SummaryEvent extends Fragment {
 
     private void retrieveEventData(View view) {
         eventImage = view.findViewById(R.id.EventImage);
-        databaseReference.child("-O7keyPNnAoXE4R6d5kj").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("-O7tO1M1ex8AumOmI3sU").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -97,17 +99,41 @@ public class SummaryEvent extends Fragment {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private @NonNull View UpdatingInfoInTextView(View view) {
         blockInfoViewModel.getBlockInfo().observe(getViewLifecycleOwner(), blockInfo -> {
             if (blockInfo != null) {
                 TextView ticketStageInfo = view.findViewById(R.id.ticketstageinfo);
                 TextView stagePrice = view.findViewById(R.id.stage_price);
+                TextView totalPrice = view.findViewById(R.id.totalAmount);
+                Button couponArrowButton = view.findViewById(R.id.Couponarrow);
 
-                String text = blockInfo.replaceAll("[0-9]", "").trim();
-                ticketStageInfo.setText(text);
+                // Extract the block name and price from the blockInfo string
+                String[] parts = blockInfo.split(" R");
+                if (parts.length == 2) {
+                    String blockName = parts[0].trim();
+                    String price = parts[1].trim();
 
-                String price = blockInfo.replaceAll("[^0-9.]", "");
-                stagePrice.setText("R" + price);
+                    // Check if the event is paid or free
+                    Boolean paidEvent = InfoEvent.PAID_EVENT; // Assuming PAID_EVENT is a static variable in InfoEvent
+                    if (paidEvent == null || !paidEvent) {
+                        // If the event is free, set prices to "Free" and disable the coupon button
+                        stagePrice.setText("Free");
+                        totalPrice.setText("Free");
+                        couponArrowButton.setEnabled(false);
+                    } else {
+                        // If the event is paid, set the actual prices
+                        stagePrice.setText("R" + price);
+                        totalPrice.setText("R" + price);
+                        couponArrowButton.setEnabled(true);
+                    }
+
+                    // Update the TextViews
+                    ticketStageInfo.setText(blockName);
+                } else {
+                    // Log an error if the blockInfo string is not in the expected format
+                    Log.e("SummaryEvent", "Unexpected blockInfo format: " + blockInfo);
+                }
             }
         });
 
