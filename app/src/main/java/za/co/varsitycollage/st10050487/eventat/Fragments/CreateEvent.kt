@@ -22,7 +22,6 @@ import za.co.varsitycollage.st10050487.eventat.R
 import java.util.*
 import android.net.Uri
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
 import android.media.ThumbnailUtils
 import android.provider.MediaStore
 import android.widget.EditText
@@ -266,6 +265,10 @@ class CreateEvent : Fragment() {
         val eventCategorySpinner = view?.findViewById<Spinner>(R.id.event_category)
         val eventCategory = eventCategorySpinner?.selectedItem.toString()
         val eventLocation = eventLocationTextView.text.toString()
+        val NumberOfAttendeesEditText = view?.findViewById<EditText>(R.id.attendees)
+        val attendeesNum = NumberOfAttendeesEditText?.text.toString()
+        val eventDescriptionEditText = view?.findViewById<EditText>(R.id.event_details)
+        val eventDescription = eventDescriptionEditText?.text.toString()
         val freeEventRadioButton = view?.findViewById<RadioButton>(R.id.free_event)
         val paidEventRadioButton = view?.findViewById<RadioButton>(R.id.paid_event)
         val payAtEventRadioButton = view?.findViewById<RadioButton>(R.id.pay_at_event)
@@ -276,7 +279,8 @@ class CreateEvent : Fragment() {
 
         // Checking if all required fields are filled
         if (!validateInputs(eventNameEditText, eventName, startTimeTextView, startTime, endTimeTextView, endTime,
-                eventDateTextView, eventDate, eventLocationTextView, eventLocation, eventCategorySpinner, eventCategory,
+                eventDateTextView, eventDate, eventLocationTextView, eventLocation,NumberOfAttendeesEditText, attendeesNum,
+                eventDescriptionEditText,eventDescription, eventCategorySpinner, eventCategory,
                 freeEventRadioButton,  paidEventRadioButton, payAtEventRadioButton, ticketPriceTextEditText, tickPrice,
                 ticketPriceAtVenueEditText, ticketPriceAtVenue)) {
             return
@@ -289,7 +293,9 @@ class CreateEvent : Fragment() {
             startTime = startTime,
             endTime = endTime,
             category = eventCategory,
-            location = eventLocation
+            location = eventLocation,
+            attendents = attendeesNum,
+            description = eventDescription,
         )
 
         // Proceed with saving the event (Firebase logic follows here)
@@ -325,13 +331,17 @@ class CreateEvent : Fragment() {
         eventDate: String,
         eventLocationTextView: TextView?,
         eventLocation: String,
+        eventAttendeesNumberEditText: EditText?,
+        attendeesNumber: String,
+        eventDescriptionEditText: EditText?,
+        eventDescription: String,
         eventCategorySpinner: Spinner?,
         eventCategory: String,
         freeEventRadioButton: RadioButton?,
         paidEventRadioButton: RadioButton?,
         payAtEventRadioButton: RadioButton?,
         ticketPriceTextEditText: EditText?,
-        tickPrice : String,
+        tickPrice: String,
         ticketPriceAtVenueEditText: EditText?,
         ticketPriceAtVenue: String
     ): Boolean {
@@ -362,6 +372,16 @@ class CreateEvent : Fragment() {
         // Checking event location
         if(eventLocation.isEmpty()) {
             eventLocationTextView?.error = "Event location is required"
+            isValid = false
+        }
+        // Checking ticket number
+        if (attendeesNumber.isEmpty()) {
+            eventAttendeesNumberEditText?.error = "Ticket number is required"
+            isValid = false
+        }
+        // Checking event description
+        if (eventDescription.isEmpty()) {
+            eventDescriptionEditText?.error = "Event description is required"
             isValid = false
         }
         // Checking event category
@@ -434,6 +454,12 @@ class CreateEvent : Fragment() {
         eventLocationTextView?.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) eventLocationTextView.error = null
         }
+        eventAttendeesNumberEditText?.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) eventAttendeesNumberEditText.error = null
+        }
+        eventDescriptionEditText?.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) eventDescriptionEditText.error = null
+        }
         eventCategorySpinner?.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) (eventCategorySpinner.selectedView as TextView).error = null
         }
@@ -459,8 +485,6 @@ class CreateEvent : Fragment() {
                 ticketPriceAtVenueEditText?.error = null
             }
         }
-
-
         return isValid
     }
 
@@ -477,6 +501,7 @@ class CreateEvent : Fragment() {
         endTimeTextView: TextView?,
         eventDateTextView: TextView?,
         eventLocationTextView: TextView?,
+        ticketNumberEditText: EditText?,
         eventCategorySpinner: Spinner?
     ) {
         eventNameEditText?.setOnFocusChangeListener { _, hasFocus ->
@@ -498,7 +523,9 @@ class CreateEvent : Fragment() {
         eventLocationTextView?.setOnClickListener {
             eventLocationTextView.error = null
         }
-
+        ticketNumberEditText?.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) ticketNumberEditText.error = null
+        }
         eventCategorySpinner?.let {
             (it.selectedView as? TextView)?.setOnClickListener {
                 (it as TextView).error = null
