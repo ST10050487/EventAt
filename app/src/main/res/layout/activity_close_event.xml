@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -13,7 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Event Image -->
         <ImageView
             android:id="@+id/close_event_image"
             android:layout_width="133dp"
@@ -27,15 +27,14 @@
         <!-- Bookmark Icon -->
         <ImageView
             android:id="@+id/bookmark_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="31dp"
+            android:layout_height="35dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:src="@drawable/ic_book_mark_icon"
+            android:src="@drawable/ic_book_mark_icon2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Event Name -->
         <TextView
             android:id="@+id/close_name_of_event"
             android:layout_width="0dp"
@@ -51,9 +50,7 @@
             app:layout_constraintStart_toEndOf="@id/close_event_image"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Location with Icon -->
 
-        <!-- Date with Icon -->
         <TextView
             android:id="@+id/location_of_event"
             android:layout_width="wrap_content"
