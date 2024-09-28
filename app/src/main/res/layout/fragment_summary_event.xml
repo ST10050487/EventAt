@@ -43,7 +43,6 @@
             android:layout_height="181dp"
             android:layout_marginStart="@dimen/_24sdp"
             android:layout_marginTop="@dimen/_48sdp"
-            android:background="@drawable/springbox"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/EventTitle" />
 

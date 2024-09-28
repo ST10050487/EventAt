@@ -3,16 +3,19 @@ package za.co.varsitycollage.st10050487.eventat.Fragments;
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +36,7 @@ public class InfoEvent extends Fragment {
     private static final String WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather";
     private TextView eventTitle, eventPrice, eventDate, eventAddress, eventTime, eventParticipants, eventWeather;
     private DatabaseReference databaseReference;
+    private ImageView eventImage;
 
     public InfoEvent() {
         // Required empty public constructor
@@ -60,6 +64,7 @@ public class InfoEvent extends Fragment {
         // Fetch weather data
         fetchWeatherData();
 
+        eventImage = view.findViewById(R.id.EventImage);
         // Fetch event data from Firebase
         fetchEventData();
 
@@ -79,6 +84,7 @@ public class InfoEvent extends Fragment {
                     String location = dataSnapshot.child("location").getValue(String.class);
                     String startTime = dataSnapshot.child("startTime").getValue(String.class);
                     String ticketPrice = dataSnapshot.child("ticketPrice").getValue(String.class);
+                    String imageUrl = dataSnapshot.child("imageUrl").getValue(String.class);
 
                     // Update UI with the retrieved data
                     eventTitle.setText(name);
@@ -86,13 +92,27 @@ public class InfoEvent extends Fragment {
                     eventAddress.setText("Address: " + location);
                     eventTime.setText("Time: " + startTime);
                     eventPrice.setText("R" + ticketPrice);
-                    eventParticipants.setText("Participants: " + "1000"); // Dummy value for participants
+                    eventParticipants.setText("Participants: " + "1000");
+
+                    // Set the image using Glide
+                    if (imageUrl != null && !imageUrl.isEmpty()) {
+                        Glide.with(getContext()).load(imageUrl).into(eventImage);
+                    } else {
+                        // Set default image if imageUrl is null or empty
+                        eventImage.setImageResource(R.drawable.springbox);
+                    }
+
+                    // Set the image dimensions programmatically
+                    ViewGroup.LayoutParams layoutParams = eventImage.getLayoutParams();
+                    layoutParams.width = getResources().getDimensionPixelSize(com.intuit.sdp.R.dimen._411sdp);
+                    layoutParams.height = getResources().getDimensionPixelSize(com.intuit.sdp.R.dimen._265sdp);
+                    eventImage.setLayoutParams(layoutParams);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle possible errors.
+                Log.e("Firebase", "DatabaseError: " + databaseError.getMessage());
             }
         });
     }

@@ -69,6 +69,10 @@ dependencies {
     //Responsive Design for the Images/views
     implementation("com.intuit.sdp:sdp-android:1.1.1")
 
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+
+    implementation("com.github.bumptech.glide:compiler:4.12.0")
+
     //Resposive Design for the text view
     implementation("com.intuit.ssp:ssp-android:1.1.1")
 
