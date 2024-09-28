@@ -1,3 +1,4 @@
+// SummaryEvent.java
 package za.co.varsitycollage.st10050487.eventat.Fragments;
 
 import android.os.Bundle;
@@ -35,13 +36,10 @@ public class SummaryEvent extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_summary_event, container, false);
 
-        // Initialize Firebase Database reference
         databaseReference = FirebaseDatabase.getInstance().getReference("events");
 
-        // Retrieve the block info from the ViewModel
         blockInfoViewModel = new ViewModelProvider(requireActivity()).get(BlockInfoViewModel.class);
 
         view = UpdatingInfoInTextView(view);
@@ -49,7 +47,6 @@ public class SummaryEvent extends Fragment {
         view = MovingToPayment(view);
         view = MovingToStageMethod(view);
 
-        // Retrieve event data from Firebase and update UI
         retrieveEventData(view);
 
         return view;
@@ -68,18 +65,15 @@ public class SummaryEvent extends Fragment {
                     String eventTitlteinfo = dataSnapshot.child("name").getValue(String.class);
                     String imageUrl = dataSnapshot.child("imageUrl").getValue(String.class);
 
-                    // Update the TextViews with the retrieved data
                     TextView eventDateTextView = view.findViewById(R.id.EventDate);
                     TextView eventTimeTextView = view.findViewById(R.id.EventTime);
                     TextView eventPriceTextView = view.findViewById(R.id.EventPrice);
                     TextView eventTitleTextView = view.findViewById(R.id.EventTitle);
                     TextView eventTitleInfo = view.findViewById(R.id.EventitleInfo);
 
-                    // Set the image using Glide
                     if (imageUrl != null && !imageUrl.isEmpty()) {
                         Glide.with(getContext()).load(imageUrl).into(eventImage);
                     } else {
-                        // Set default image if imageUrl is null or empty
                         eventImage.setImageResource(R.drawable.springbox);
                     }
 
@@ -89,7 +83,6 @@ public class SummaryEvent extends Fragment {
                     eventTitleTextView.setText(eventTitle);
                     eventTitleInfo.setText(eventTitlteinfo);
 
-                    // Set the image dimensions programmatically using dp
                     ViewGroup.LayoutParams layoutParams = eventImage.getLayoutParams();
                     layoutParams.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 355, getResources().getDisplayMetrics());
                     layoutParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 181, getResources().getDisplayMetrics());
@@ -110,11 +103,9 @@ public class SummaryEvent extends Fragment {
                 TextView ticketStageInfo = view.findViewById(R.id.ticketstageinfo);
                 TextView stagePrice = view.findViewById(R.id.stage_price);
 
-                // Extract the text part of the blockInfo string
                 String text = blockInfo.replaceAll("[0-9]", "").trim();
                 ticketStageInfo.setText(text);
 
-                // Extract the price from the blockInfo string
                 String price = blockInfo.replaceAll("[^0-9.]", "");
                 stagePrice.setText("R" + price);
             }
@@ -125,34 +116,25 @@ public class SummaryEvent extends Fragment {
 
     private @NonNull View MovingToCoupon(View view) {
         Button couponArrowButton = view.findViewById(R.id.Couponarrow);
-        couponArrowButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Navigate to ApplyCoupon fragment
-                Fragment applyCouponFragment = new ApplyCoupon();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_EventInfo_container, applyCouponFragment);
-                transaction.addToBackStack(null); // Add to back stack to allow back navigation
-                transaction.commit();
-            }
+        couponArrowButton.setOnClickListener(v -> {
+            Fragment applyCouponFragment = new ApplyCoupon();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_EventInfo_container, applyCouponFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
 
         return view;
     }
 
     private @NonNull View MovingToPayment(View view) {
-        // Find the next button and set an OnClickListener
         Button nextButton = view.findViewById(R.id.EventSubmitButton);
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Navigate to PaymentMethod fragment
-                Fragment paymentMethodFragment = new PaymentMethod();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_EventInfo_container, paymentMethodFragment);
-                transaction.addToBackStack(null); // Add to back stack to allow back navigation
-                transaction.commit();
-            }
+        nextButton.setOnClickListener(v -> {
+            Fragment paymentMethodFragment = new PaymentMethod();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_EventInfo_container, paymentMethodFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
 
         return view;
@@ -160,16 +142,12 @@ public class SummaryEvent extends Fragment {
 
     private @NonNull View MovingToStageMethod(View view) {
         Button arrowButton = view.findViewById(R.id.arrowButton);
-        arrowButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Navigate to ChoosingTicketStage fragment
-                Fragment choosingTicketStageFragment = new ChoosingTicketStage();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_EventInfo_container, choosingTicketStageFragment);
-                transaction.addToBackStack(null); // Add to back stack to allow back navigation
-                transaction.commit();
-            }
+        arrowButton.setOnClickListener(v -> {
+            Fragment choosingTicketStageFragment = new ChoosingTicketStage();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_EventInfo_container, choosingTicketStageFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
 
         return view;
