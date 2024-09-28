@@ -5,5 +5,7 @@
     <color name="red">#DF5555</color>
     <color name="purple">#2D394E</color>
     <color name="transparent">#00000000</color>
+    <color name="faded_grey">#D3D3D3</color>
+    <color name="grey">#808080</color>
 
 </resources>
