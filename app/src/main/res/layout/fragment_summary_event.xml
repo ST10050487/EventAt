@@ -43,7 +43,6 @@
             android:layout_height="181dp"
             android:layout_marginStart="@dimen/_24sdp"
             android:layout_marginTop="@dimen/_48sdp"
-            android:background="@drawable/springbox"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/EventTitle" />
 
@@ -166,7 +165,7 @@
                     android:textAppearance="@style/supporting_" />
 
                 <TextView
-                    android:id="@+id/supporting_"
+                    android:id="@+id/stage_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -216,6 +215,7 @@
                         android:id="@+id/Couponarrow"
                         android:layout_width="@dimen/_25sdp"
                         android:layout_height="33dp"
+                        android:layout_marginEnd="@dimen/_26sdp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/_30sdp"

@@ -127,7 +127,7 @@
             app:layout_constraintTop_toBottomOf="@id/TicketHeading" />
 
         <TextView
-            android:id="@+id/supporting_"
+            android:id="@+id/stage_price"
             android:layout_width="0dp"
             android:layout_height="37dp"
             android:layout_marginTop="20dp"
@@ -154,7 +154,7 @@
             android:textSize="22sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/supporting_" />
+            app:layout_constraintTop_toBottomOf="@id/stage_price" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

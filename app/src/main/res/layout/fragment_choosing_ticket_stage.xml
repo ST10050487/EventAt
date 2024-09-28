@@ -41,7 +41,7 @@
                 app:layout_constraintTop_toTopOf="@id/arrowButton" />
 
             <TextView
-                android:id="@+id/supporting_"
+                android:id="@+id/stage_price"
                 android:layout_width="447dp"
                 android:layout_height="54dp"
                 android:layout_marginTop="8dp"
@@ -65,10 +65,10 @@
                 android:layout_marginTop="4dp"
                 android:background="#323232"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/supporting_" />
+                app:layout_constraintTop_toBottomOf="@id/stage_price" />
 
             <FrameLayout
-                android:id="@+id/VIP_block"
+                android:id="@+id/A_Premium_block"
                 android:layout_width="353dp"
                 android:layout_height="59dp"
                 android:layout_marginStart="37dp"
@@ -77,12 +77,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rectangle_2">
 
-                <TextView
-                    android:id="@+id/supporting_text"
+                <Button
+                    android:id="@+id/A_block_txt"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
                     android:gravity="center"
                     android:lineSpacingExtra="-2sp"
+                    android:padding="0dp"
                     android:text="A block (VIP) R 1000"
                     android:textAppearance="@style/supporting_"
                     android:textColor="@color/black"
@@ -90,62 +92,71 @@
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/rectangle_4"
+                android:id="@+id/B_Premium_block"
                 android:layout_width="170dp"
                 android:layout_height="178dp"
                 android:layout_marginStart="37dp"
                 android:layout_marginTop="16dp"
                 android:background="#FCF192"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/VIP_block">
+                app:layout_constraintTop_toBottomOf="@id/A_Premium_block">
 
-                <TextView
-                    android:id="@+id/supporting_text_2"
+                <Button
+                    android:id="@+id/b_block_txt"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
                     android:gravity="center"
                     android:lineSpacingExtra="-2sp"
+                    android:padding="0dp"
                     android:text="B Block (Premium) R500"
+                    android:textColor="@color/black"
                     android:textAppearance="@style/supporting_"
                     android:textStyle="bold" />
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/rectangle_5"
+                android:id="@+id/C_Premium_block"
                 android:layout_width="166dp"
                 android:layout_height="176dp"
                 android:layout_marginStart="18dp"
                 android:background="#34EEE3"
-                app:layout_constraintStart_toEndOf="@id/rectangle_4"
-                app:layout_constraintTop_toTopOf="@id/rectangle_4">
+                app:layout_constraintStart_toEndOf="@id/B_Premium_block"
+                app:layout_constraintTop_toTopOf="@id/B_Premium_block">
 
-                <TextView
-                    android:id="@+id/supporting_text_3"
+                <Button
+                    android:id="@+id/c_block_txt"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
                     android:gravity="center"
                     android:lineSpacingExtra="-2sp"
+                    android:textColor="@color/black"
+                    android:padding="0dp"
                     android:text="C Block (Premium) R500"
                     android:textAppearance="@style/supporting_"
                     android:textStyle="bold" />
             </FrameLayout>
 
             <FrameLayout
-                android:id="@+id/rectangle_6"
+                android:id="@+id/D_superior_block"
                 android:layout_width="356dp"
                 android:layout_height="161dp"
                 android:layout_marginStart="37dp"
                 android:layout_marginTop="16dp"
                 android:background="#E092FC"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rectangle_4">
+                app:layout_constraintTop_toBottomOf="@id/B_Premium_block">
 
-                <TextView
-                    android:id="@+id/supporting_text_4"
+                <Button
+                    android:id="@+id/d_block_txt"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
                     android:gravity="center"
+                    android:textColor="@color/black"
                     android:lineSpacingExtra="-2sp"
+                    android:padding="0dp"
                     android:text="D block (Superior) 350 - 250"
                     android:textAppearance="@style/supporting_"
                     android:textStyle="bold" />
@@ -164,7 +175,7 @@
                 android:textColor="@color/purple"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rectangle_6" />
+                app:layout_constraintTop_toBottomOf="@id/D_superior_block" />
 
             <FrameLayout
                 android:id="@+id/square2"
