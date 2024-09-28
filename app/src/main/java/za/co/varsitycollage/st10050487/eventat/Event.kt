@@ -7,6 +7,8 @@ data class Event(
     var endTime: String? = null,
     var category: String? = null,
     var location: String? = null,
+    var attendents: String? = null,
+    var description: String? = null,
     var ticketPrice: String? = null,
     var ticketPriceAtVenue: String? = null,
     var isPaidEvent: Boolean = false,
