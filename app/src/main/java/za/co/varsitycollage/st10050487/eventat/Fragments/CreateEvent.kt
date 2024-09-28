@@ -265,28 +265,45 @@ class CreateEvent : Fragment() {
         val eventCategorySpinner = view?.findViewById<Spinner>(R.id.event_category)
         val eventCategory = eventCategorySpinner?.selectedItem.toString()
         val eventLocation = eventLocationTextView.text.toString()
-        val NumberOfAttendeesEditText = view?.findViewById<EditText>(R.id.attendees)
-        val attendeesNum = NumberOfAttendeesEditText?.text.toString()
+        val numberOfAttendeesEditText = view?.findViewById<EditText>(R.id.attendees)
+        val attendeesNum = numberOfAttendeesEditText?.text.toString()
         val eventDescriptionEditText = view?.findViewById<EditText>(R.id.event_details)
         val eventDescription = eventDescriptionEditText?.text.toString()
+
+        // Radio buttons for event payment types
         val freeEventRadioButton = view?.findViewById<RadioButton>(R.id.free_event)
         val paidEventRadioButton = view?.findViewById<RadioButton>(R.id.paid_event)
         val payAtEventRadioButton = view?.findViewById<RadioButton>(R.id.pay_at_event)
+
+        // Ticket prices
         val ticketPriceTextEditText = view?.findViewById<EditText>(R.id.ticket_price)
-        val tickPrice = ticketPriceTextEditText?.text.toString()
+        val ticketPrice = ticketPriceTextEditText?.text.toString()
         val ticketPriceAtVenueEditText = view?.findViewById<EditText>(R.id.ticket_price_at_venue)
         val ticketPriceAtVenue = ticketPriceAtVenueEditText?.text.toString()
 
-        // Checking if all required fields are filled
+        // Check if all required fields are filled
         if (!validateInputs(eventNameEditText, eventName, startTimeTextView, startTime, endTimeTextView, endTime,
-                eventDateTextView, eventDate, eventLocationTextView, eventLocation,NumberOfAttendeesEditText, attendeesNum,
-                eventDescriptionEditText,eventDescription, eventCategorySpinner, eventCategory,
-                freeEventRadioButton,  paidEventRadioButton, payAtEventRadioButton, ticketPriceTextEditText, tickPrice,
+                eventDateTextView, eventDate, eventLocationTextView, eventLocation, numberOfAttendeesEditText, attendeesNum,
+                eventDescriptionEditText, eventDescription, eventCategorySpinner, eventCategory,
+                freeEventRadioButton, paidEventRadioButton, payAtEventRadioButton, ticketPriceTextEditText, ticketPrice,
                 ticketPriceAtVenueEditText, ticketPriceAtVenue)) {
             return
         }
 
-        // Create Event object
+        // Determine event type and pricing
+        var isPaidEvent = false
+        var finalTicketPrice: String? = null
+        var finalTicketPriceAtVenue: String? = null
+
+        if (paidEventRadioButton?.isChecked == true) {
+            isPaidEvent = true
+            finalTicketPrice = ticketPrice // Use the entered ticket price for paid event
+        } else if (payAtEventRadioButton?.isChecked == true) {
+            isPaidEvent = true
+            finalTicketPriceAtVenue = ticketPriceAtVenue // Use the entered price for pay-at-venue event
+        }
+
+        // Create the Event object
         val event = Event(
             name = eventName,
             date = eventDate,
@@ -296,12 +313,15 @@ class CreateEvent : Fragment() {
             location = eventLocation,
             attendents = attendeesNum,
             description = eventDescription,
+            ticketPrice = finalTicketPrice,
+            ticketPriceAtVenue = finalTicketPriceAtVenue,
+            isPaidEvent = isPaidEvent
         )
 
-        // Proceed with saving the event (Firebase logic follows here)
+        // Proceed with saving the event to Firebase
         val eventId = database.child("events").push().key
         if (eventId != null) {
-            // Uploading image and video logic here
+            // Upload image and video logic
             uploadImageAndGetUrl(eventId) { imageUrl ->
                 uploadVideoAndGetUrl(eventId) { videoUrl ->
                     event.imageUrl = imageUrl
@@ -318,6 +338,7 @@ class CreateEvent : Fragment() {
             }
         }
     }
+
 
     //A function to validate the input fields
     private fun validateInputs(
