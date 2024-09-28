@@ -85,4 +85,6 @@ dependencies {
     implementation("com.google.android.material:material:1.9.0")
     // Checking for the latest version
     implementation("com.google.android.material:material:1.8.0")
+    //Glide library for image loading
+    implementation("com.github.bumptech.glide:glide:4.12.0")
 }
