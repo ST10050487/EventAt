@@ -1,5 +1,7 @@
+// ChoosingTicketStage.java
 package za.co.varsitycollage.st10050487.eventat.Fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -34,12 +36,25 @@ public class ChoosingTicketStage extends Fragment {
         // Required empty public constructor
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_choosing_ticket_stage, container, false);
 
+        // Initialize buttons
+        aBlockButton = view.findViewById(R.id.A_block_txt);
+        bBlockButton = view.findViewById(R.id.b_block_txt);
+        cBlockButton = view.findViewById(R.id.c_block_txt);
+        dBlockButton = view.findViewById(R.id.d_block_txt);
+
+        // Set button texts with prices
+        double basePrice = InfoEvent.BASE_PRICE;
+        aBlockButton.setText("A block (VIP Premium) R" + (int) Math.round(basePrice * 1.20));
+        bBlockButton.setText("B Block (Premium) R" + (int) Math.round(basePrice * 1.15));
+        cBlockButton.setText("C Block (Premium) R" + (int) Math.round(basePrice * 1.15));
+        dBlockButton.setText("D block (Superior) R" + basePrice);
 
         view = Adding_MinusTickets(view);
 
@@ -50,57 +65,48 @@ public class ChoosingTicketStage extends Fragment {
     }
 
     private @NonNull View SendingBtnInfoToSummaryEvent(View view) {
-        aBlockButton = view.findViewById(R.id.A_block_txt);
-        bBlockButton = view.findViewById(R.id.b_block_txt);
-        cBlockButton = view.findViewById(R.id.c_block_txt);
-        dBlockButton = view.findViewById(R.id.d_block_txt);
-
         aBlockButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "A block (VIP) clicked", Toast.LENGTH_SHORT).show();
-                blockInfoViewModel.setBlockInfo("A block (VIP) R 1000");
+                int price = (int) Math.round(InfoEvent.BASE_PRICE * 1.20);
+                String blockInfo = "A block (VIP Premium) " + price;
+                Toast.makeText(getContext(), blockInfo, Toast.LENGTH_SHORT).show();
+                blockInfoViewModel.setBlockInfo(blockInfo);
             }
         });
 
         bBlockButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "B Block (Premium) clicked", Toast.LENGTH_SHORT).show();
-                blockInfoViewModel.setBlockInfo("B Block (Premium) R500");
+                int price = (int) Math.round(InfoEvent.BASE_PRICE * 1.15);
+                String blockInfo = "B Block (Premium)  " + price;
+                Toast.makeText(getContext(), blockInfo, Toast.LENGTH_SHORT).show();
+                blockInfoViewModel.setBlockInfo(blockInfo);
             }
         });
 
         cBlockButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "C Block (Premium) clicked", Toast.LENGTH_SHORT).show();
-                blockInfoViewModel.setBlockInfo("C Block (Premium) R500");
+                int price = (int) Math.round(InfoEvent.BASE_PRICE * 1.15);
+                String blockInfo = "C Block (Premium)  " + price;
+                cBlockButton.setText(blockInfo);
+                Toast.makeText(getContext(), blockInfo, Toast.LENGTH_SHORT).show();
+                blockInfoViewModel.setBlockInfo(blockInfo);
             }
         });
 
         dBlockButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "D block (Superior) clicked", Toast.LENGTH_SHORT).show();
-                int randomPrice = 250 + (int)(Math.random() * ((350 - 250) + 1));
-                blockInfoViewModel.setBlockInfo("D block (Superior) R" + randomPrice);
+                int randomPrice = 250 + (int) (Math.random() * ((350 - 250) + 1));
+                String blockInfo = "D block (Superior)  " + randomPrice;
+                Toast.makeText(getContext(), blockInfo, Toast.LENGTH_SHORT).show();
+                blockInfoViewModel.setBlockInfo(blockInfo);
             }
         });
 
         return view;
-    }
-
-    private void sendBlockInfoToSummary(String blockInfo) {
-        Fragment summaryEventFragment = new SummaryEvent();
-        Bundle bundle = new Bundle();
-        bundle.putString("blockInfo", blockInfo);
-        summaryEventFragment.setArguments(bundle);
-
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_EventInfo_container, summaryEventFragment);
-        transaction.addToBackStack(null); // Add to back stack to allow back navigation
-        transaction.commit();
     }
 
     private @NonNull View Adding_MinusTickets(View view) {

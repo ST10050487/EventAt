@@ -115,7 +115,7 @@ public class SummaryEvent extends Fragment {
                 ticketStageInfo.setText(text);
 
                 // Extract the price from the blockInfo string
-                String price = blockInfo.replaceAll("[^0-9]", "");
+                String price = blockInfo.replaceAll("[^0-9.]", "");
                 stagePrice.setText("R" + price);
             }
         });

@@ -37,6 +37,7 @@ public class InfoEvent extends Fragment {
     private TextView eventTitle, eventPrice, eventDate, eventAddress, eventTime, eventParticipants, eventWeather;
     private DatabaseReference databaseReference;
     private ImageView eventImage;
+    public static final double BASE_PRICE = 350;
 
     public InfoEvent() {
         // Required empty public constructor
@@ -75,7 +76,7 @@ public class InfoEvent extends Fragment {
     }
 
     private void fetchEventData() {
-        databaseReference.child("-O7keyPNnAoXE4R6d5kj").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("-O7soerp9IfLh4K99WfU").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -91,7 +92,8 @@ public class InfoEvent extends Fragment {
                     eventDate.setText("Date: " + date);
                     eventAddress.setText("Address: " + location);
                     eventTime.setText("Time: " + startTime);
-                    eventPrice.setText("R" + ticketPrice);
+//                    eventPrice.setText("R" + ticketPrice);
+                    eventPrice.setText("R450");
                     eventParticipants.setText("Participants: " + "1000");
 
                     // Set the image using Glide
@@ -205,10 +207,12 @@ public class InfoEvent extends Fragment {
         TextView eventTime = view.findViewById(R.id.EventTime);
         TextView eventWeather = view.findViewById(R.id.EventWeather);
         TextView eventParticipants = view.findViewById(R.id.EventParticipants);
+        ImageView eventImage = view.findViewById(R.id.EventImage);
+
 
         // Set dummy values for each view
         eventTitle.setText("Spring bok vs Argentina");
-        supporting.setText("R450");
+        supporting.setText("R 350");
         eventDate.setText("Date: " + "2021-09-22");
         eventAddress.setText("Address: " + "Cape Town Stadium");
         eventTime.setText("Time: " + "14:00");
