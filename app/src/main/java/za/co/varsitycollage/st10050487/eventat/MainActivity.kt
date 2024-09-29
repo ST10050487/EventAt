@@ -7,6 +7,7 @@ import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import za.co.varsitycollage.st10050487.eventat.Fragments.HomeScreen
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         // Delay of 3 seconds (3000 milliseconds)
         Handler(Looper.getMainLooper()).postDelayed({
             // Navigate to GoogleMapsAPI Activity after the delay
-            val intent = Intent(this@MainActivity, Home::class.java)
+            val intent = Intent(this@MainActivity, Home ::class.java)
             startActivity(intent)
             // Finishing MainActivity so that the user cannot go back to it
             finish()

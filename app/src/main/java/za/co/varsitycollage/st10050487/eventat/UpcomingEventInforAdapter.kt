@@ -1,5 +1,6 @@
 package za.co.varsitycollage.st10050487.eventat
 
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class UpcomingEventInforAdapter(private val eventList: ArrayList<Event>) : RecyclerView.Adapter<UpcomingEventInforAdapter.ViewHolder>() {
+class UpcomingEventInforAdapter(
+    private val eventList: ArrayList<Event>,
+    private val onItemClick: (Event) -> Unit
+) : RecyclerView.Adapter<UpcomingEventInforAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.activity_upcoming_event, parent, false)
+        val itemView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.activity_upcoming_event, parent, false)
         return ViewHolder(itemView)
     }
 
@@ -34,6 +39,11 @@ class UpcomingEventInforAdapter(private val eventList: ArrayList<Event>) : Recyc
         holder.eventDate.text = currentItem.date
         holder.eventLocation.text = currentItem.location
         holder.eventTicketPrice.text = currentItem.ticketPrice
+
+        // Set click listener
+        holder.itemView.setOnClickListener {
+            onItemClick(currentItem)
+        }
     }
 
     override fun getItemCount(): Int {

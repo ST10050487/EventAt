@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,12 +26,36 @@ import za.co.varsitycollage.st10050487.eventat.R;
 
 public class ticketDownload extends Fragment {
     private DatabaseReference databaseReference;
-    private TextView eventHeading, eventDate, eventTime;
+    private TextView eventHeading, eventDate, eventTime, eventPrice;
     private ImageView eventImage;
+    private String eventName;
+    private static final String ARG_EVENT_NAME = "eventName";
+    private SharedViewModel sharedViewModel;
 
     public ticketDownload() {
         // Required empty public constructor
     }
+
+    // ticketDownload.java
+    public static ticketDownload newInstance(String eventName) {
+        ticketDownload fragment = new ticketDownload();
+        Bundle args = new Bundle();
+        args.putString(ARG_EVENT_NAME, eventName);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        sharedViewModel.getEventName().observe(this, name -> {
+            eventName = name;
+            fetchEventData(); // Fetch event data when event name is updated
+        });
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,6 +71,7 @@ public class ticketDownload extends Fragment {
         eventDate = view.findViewById(R.id.EventDate);
         eventTime = view.findViewById(R.id.EventTime);
         eventImage = view.findViewById(R.id.EventImage);
+        eventPrice = view.findViewById(R.id.stage_price);
 
         // Fetch event data from Firebase
         fetchEventData();
@@ -60,8 +86,13 @@ public class ticketDownload extends Fragment {
     }
 
 
-    private void fetchEventData() {
-        databaseReference.child("-O7keyPNnAoXE4R6d5kj").addListenerForSingleValueEvent(new ValueEventListener() {
+    private void fetchEventData()
+    {
+         eventName = SummaryEvent.FINAL_EVENT;
+        if (eventName == null) {
+            return;
+        }
+        databaseReference.orderByChild("name").equalTo(eventName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
@@ -69,6 +100,14 @@ public class ticketDownload extends Fragment {
                     String date = dataSnapshot.child("date").getValue(String.class);
                     String time = dataSnapshot.child("startTime").getValue(String.class);
                     String imageUrl = dataSnapshot.child("imageUrl").getValue(String.class);
+                    String stageprice = dataSnapshot.child("ticketPrice").getValue(String.class);
+
+                    Boolean paidEvent = InfoEvent.PAID_EVENT;
+                    if (paidEvent == null || !paidEvent) {
+                        eventPrice.setText("Price: Free");
+                    } else {
+                        eventPrice.setText("Price: ZAR " + stageprice);
+                    }
 
                     // Update UI with the retrieved data
                     eventHeading.setText(heading);

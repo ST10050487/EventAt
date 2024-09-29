@@ -1,6 +1,7 @@
 package za.co.varsitycollage.st10050487.eventat
 
 data class Event(
+    val id: String? = null,
     var name: String? = null,
     var date: String? = null,
     var startTime: String? = null,
