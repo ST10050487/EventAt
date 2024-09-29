@@ -54,8 +54,10 @@ class HomeScreen : Fragment() {
         closeEventsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         closeEventsRecyclerView.setHasFixedSize(true)
 
+        // Set horizontal layout manager for upcomingEventsRecyclerView
         upcomingEventsRecyclerView = view.findViewById(R.id.upcomingEventsRecyclerView)
-        upcomingEventsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        upcomingEventsRecyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         upcomingEventsRecyclerView.setHasFixedSize(true)
 
         eventList = arrayListOf()
@@ -136,3 +138,4 @@ class HomeScreen : Fragment() {
             }
     }
 }
+

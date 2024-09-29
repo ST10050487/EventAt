@@ -52,7 +52,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/rounded_edit_text"
-        app:layout_constraintWidth_percent="0.8" /> <!-- 80% of screen width -->
+        app:layout_constraintWidth_percent="0.8" />
 
     <LinearLayout
         android:id="@+id/upcoming_section"
@@ -90,7 +90,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:scrollbarAlwaysDrawHorizontalTrack="true"
         tools:listitem="@layout/activity_upcoming_event"
-        app:layout_constraintHeight_percent="0.4" /> <!-- 40% of screen height -->
+        app:layout_constraintHeight_percent="0.4"
+        android:scrollbars="horizontal" />
+
 
     <LinearLayout
         android:id="@+id/close_section"
@@ -106,6 +108,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:id="@+id/closeEvents"
             android:text="Events Around"
             android:textSize="25sp"
             android:textStyle="bold" />
@@ -122,12 +125,12 @@
         android:id="@+id/closeEventsRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        tools:listitem="@layout/activity_close_event"
-        app:layout_constraintTop_toBottomOf="@+id/close_section"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.4" /> <!-- 40% of screen height -->
+        app:layout_constraintHeight_percent="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/close_section"
+        tools:listitem="@layout/activity_close_event" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
 
