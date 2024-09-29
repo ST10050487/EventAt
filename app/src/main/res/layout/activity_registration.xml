@@ -1,0 +1,119 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Registration">
+
+    <!-- Background image -->
+    <ImageView
+        android:id="@+id/background_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/image_16"
+        android:scaleType="centerCrop"
+        android:contentDescription="Background Image"/>
+
+    <!-- Hello text -->
+    <TextView
+        android:id="@+id/hello_ready"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="160dp"
+        android:layout_centerHorizontal="true"
+        android:text="Hello!\nReady to explore?"
+        android:textSize="28sp"
+        android:textColor="#FFFFFF"
+        android:gravity="center"
+        android:lineSpacingExtra="4sp"/>
+
+    <!-- Full name input -->
+    <EditText
+        android:id="@+id/editTextFullName"
+        android:layout_width="328dp"
+        android:layout_height="58.47dp"
+        android:layout_below="@id/hello_ready"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/input_text"
+        android:hint="First name"
+        android:padding="10dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="16sp" />
+
+    <!-- Surname input -->
+    <EditText
+        android:id="@+id/editTextSurname"
+        android:layout_width="328dp"
+        android:layout_height="58.47dp"
+        android:layout_below="@id/editTextFullName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/input_text"
+        android:hint="Surname"
+        android:padding="10dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="16sp" />
+
+    <!-- Email address input -->
+    <EditText
+        android:id="@+id/editTextEmail"
+        android:layout_width="328dp"
+        android:layout_height="58.47dp"
+        android:layout_below="@id/editTextSurname"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/input_text"
+        android:hint="Email address"
+        android:inputType="textEmailAddress"
+        android:padding="10dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:textSize="16sp" />
+
+    <!-- Password input -->
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="328dp"
+        android:layout_height="58.47dp"
+        android:layout_below="@id/editTextEmail"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/input_text"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFEFE"
+        android:textSize="16sp" />
+
+    <!-- Create account button -->
+    <Button
+        android:id="@+id/buttonSignUp"
+        android:layout_width="328dp"
+        android:layout_height="52dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:layout_below="@id/editTextPassword"
+        android:text="Create account"
+        android:backgroundTint="#5F19F2"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"/>
+
+    <!-- Sign In link -->
+    <TextView
+        android:id="@+id/you_have_ac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/buttonSignUp"
+        android:layout_centerHorizontal="true"
+        android:text="You have an account? Sign in"
+        android:textColor="#FFFFFF"
+        android:textSize="13sp"
+        android:gravity="center"/>
+
+</RelativeLayout>

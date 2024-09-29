@@ -42,4 +42,20 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">@dimen/_35sdp</item>
     </style>
+
+
+    <style name="log_in">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="plan_your_p">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="beautiful_e">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
 </resources>
