@@ -1,5 +1,6 @@
 package za.co.varsitycollage.st10050487.eventat.Fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import za.co.varsitycollage.st10050487.eventat.Event
 import za.co.varsitycollage.st10050487.eventat.CloseEventInforAdapter
+import za.co.varsitycollage.st10050487.eventat.EventInfoBooking
 import za.co.varsitycollage.st10050487.eventat.UpcomingEventInforAdapter
 import za.co.varsitycollage.st10050487.eventat.R
 
@@ -47,27 +49,36 @@ class HomeScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Findings the close events recycler view
+        // Initialize RecyclerViews and Adapters
         closeEventsRecyclerView = view.findViewById(R.id.closeEventsRecyclerView)
         closeEventsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         closeEventsRecyclerView.setHasFixedSize(true)
 
-        // Findings the upcoming events recycler view
         upcomingEventsRecyclerView = view.findViewById(R.id.upcomingEventsRecyclerView)
         upcomingEventsRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         upcomingEventsRecyclerView.setHasFixedSize(true)
 
-        eventList = arrayListOf<Event>()
-        closeEventAdapter = CloseEventInforAdapter(eventList)
+        eventList = arrayListOf()
+        closeEventAdapter = CloseEventInforAdapter(eventList) { event ->
+            navigateToInfoEvent(event)
+        }
         closeEventsRecyclerView.adapter = closeEventAdapter
 
-        upcomingEventList = arrayListOf<Event>()
-        upcomingEventAdapter = UpcomingEventInforAdapter(upcomingEventList)
+        upcomingEventList = arrayListOf()
+        upcomingEventAdapter = UpcomingEventInforAdapter(upcomingEventList) { event ->
+            navigateToInfoEvent(event)
+        }
         upcomingEventsRecyclerView.adapter = upcomingEventAdapter
 
-        // Calling the functions to get the data from the database
+        // Fetch data
         getUserData()
         getUpcomingEvents(upcomingEventList, upcomingEventAdapter)
+    }
+
+    private fun navigateToInfoEvent(event: Event) {
+        val intent = Intent(requireContext(), EventInfoBooking::class.java)
+        intent.putExtra("EVENT_NAME", event.name)
+        startActivity(intent)
     }
 
     private fun getUserData() {
@@ -89,7 +100,10 @@ class HomeScreen : Fragment() {
         })
     }
 
-    private fun getUpcomingEvents(upcomingEventList: ArrayList<Event>, adapter: UpcomingEventInforAdapter) {
+    private fun getUpcomingEvents(
+        upcomingEventList: ArrayList<Event>,
+        adapter: UpcomingEventInforAdapter
+    ) {
         dbref = FirebaseDatabase.getInstance().getReference("events")
         dbref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
