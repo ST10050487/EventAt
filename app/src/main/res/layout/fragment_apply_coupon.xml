@@ -25,16 +25,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/arrowButton"
-            android:layout_width="@dimen/_26sdp"
-            android:layout_height="@dimen/_25sdp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/arrow"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <FrameLayout
             android:id="@+id/square2"
             android:layout_width="@dimen/_270sdp"
@@ -131,7 +121,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-            <!-- LinearLayout for MasterCard and Visa images -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -140,14 +129,12 @@
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:orientation="vertical">
 
-                <!-- ImageView for MasterCard -->
                 <ImageView
                     android:id="@+id/mastercard_image"
                     android:layout_width="@dimen/_40sdp"
                     android:layout_height="@dimen/_40sdp"
                     android:src="@drawable/mastercard" />
 
-                <!-- ImageView for Visa -->
                 <ImageView
                     android:id="@+id/visa_image"
                     android:layout_width="@dimen/_40sdp"
@@ -156,7 +143,6 @@
                     android:src="@drawable/visa" />
             </LinearLayout>
 
-            <!-- LinearLayout for TextViews -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_108sdp"
@@ -185,7 +171,6 @@
                     android:text="Get up R100 cashback with this code"
                     android:textAppearance="@style/supporting_2" />
 
-                <!-- LinearLayout for new TextViews -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -217,7 +202,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- New TextView outside of LinearLayouts -->
             <Button
                 android:id="@+id/TaptoApply"
                 android:layout_width="112dp"

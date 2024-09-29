@@ -25,9 +25,27 @@ public class Addcard extends Fragment {
 
     private EditText cardName, cardNumber, expiryDate, cvv;
     private DatabaseReference databaseReference;
-
+    private static final String ARG_EVENT_NAME = "eventName";
+    private String eventName;
     public Addcard() {
         // Required empty public constructor
+    }
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            eventName = getArguments().getString(ARG_EVENT_NAME);
+        }
+
+    }
+
+    public static Addcard newInstance(String eventName)
+    {
+        Addcard fragment = new Addcard();
+        Bundle args = new Bundle();
+        args.putString(ARG_EVENT_NAME, eventName);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -47,9 +65,6 @@ public class Addcard extends Fragment {
 
         // Set up the date picker for expiry date
         setupExpiryDatePicker();
-
-        // Set up the button to navigate to PaymentMethod fragment
-        SendingBacktoPaymentMethod(view);
 
         // Set up the button to navigate to PaymentSuccessful fragment
         setupMakePaymentButton(view);
@@ -87,23 +102,7 @@ public class Addcard extends Fragment {
         });
     }
 
-    private void SendingBacktoPaymentMethod(View view) {
-        // Find the arrowButton and set an OnClickListener
-        Button arrowButton = view.findViewById(R.id.arrowButton);
-        arrowButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create an instance of the PaymentMethod fragment
-                Fragment paymentMethodFragment = new PaymentMethod();
 
-                // Replace the current fragment with the PaymentMethod fragment
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_EventInfo_container, paymentMethodFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
-    }
 
     private void setupMakePaymentButton(View view) {
         Button makePaymentButton = view.findViewById(R.id.MakePaymentButton);
@@ -146,7 +145,7 @@ public class Addcard extends Fragment {
     }
 
     private void navigateToPaymentSuccessful() {
-        Fragment paymentSuccessfulFragment = new PaymentSuccessful();
+        Fragment paymentSuccessfulFragment = new PaymentSuccessful().newInstance(eventName);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_EventInfo_container, paymentSuccessfulFragment);
         transaction.addToBackStack(null);

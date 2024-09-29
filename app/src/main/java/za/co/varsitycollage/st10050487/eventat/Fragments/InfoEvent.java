@@ -32,14 +32,34 @@ import java.net.URL;
 import za.co.varsitycollage.st10050487.eventat.R;
 
 public class InfoEvent extends Fragment {
+    private static final String ARG_EVENT_NAME = "eventName";
+    private String eventName;
     private static final String API_KEY = "73e64f4603ce99b1b81a64d0f7363b2d";
     private static final String WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather";
     private TextView eventTitle, eventPrice, eventDate, eventAddress, eventTime, eventParticipants, eventWeather;
     private DatabaseReference databaseReference;
     private ImageView eventImage;
+    public static double BASE_PRICE;
+    public static Boolean PAID_EVENT;
 
     public InfoEvent() {
         // Required empty public constructor
+    }
+
+    public static InfoEvent newInstance(String eventName) {
+        InfoEvent fragment = new InfoEvent();
+        Bundle args = new Bundle();
+        args.putString(ARG_EVENT_NAME, eventName);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            eventName = getArguments().getString(ARG_EVENT_NAME);
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -60,13 +80,13 @@ public class InfoEvent extends Fragment {
         eventTime = view.findViewById(R.id.EventTime);
         eventWeather = view.findViewById(R.id.EventWeather);
         eventParticipants = view.findViewById(R.id.EventParticipants);
+        eventImage = view.findViewById(R.id.EventImage);
+
+        // Fetch event data from Firebase
+        fetchEventData();
 
         // Fetch weather data
         fetchWeatherData();
-
-        eventImage = view.findViewById(R.id.EventImage);
-        // Fetch event data from Firebase
-        fetchEventData();
 
         SendingToEventPromotion(view);
         SendingBtnToTicketStage(view);
@@ -75,38 +95,55 @@ public class InfoEvent extends Fragment {
     }
 
     private void fetchEventData() {
-        databaseReference.child("-O7keyPNnAoXE4R6d5kj").addListenerForSingleValueEvent(new ValueEventListener() {
+        if (eventName == null) {
+            Log.e("InfoEvent", "Event name is null");
+            return;
+        }
+
+        databaseReference.orderByChild("name").equalTo(eventName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    String name = dataSnapshot.child("name").getValue(String.class);
-                    String date = dataSnapshot.child("date").getValue(String.class);
-                    String location = dataSnapshot.child("location").getValue(String.class);
-                    String startTime = dataSnapshot.child("startTime").getValue(String.class);
-                    String ticketPrice = dataSnapshot.child("ticketPrice").getValue(String.class);
-                    String imageUrl = dataSnapshot.child("imageUrl").getValue(String.class);
+                    for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
+                        String name = eventSnapshot.child("name").getValue(String.class);
+                        String date = eventSnapshot.child("date").getValue(String.class);
+                        String location = eventSnapshot.child("location").getValue(String.class);
+                        String startTime = eventSnapshot.child("startTime").getValue(String.class);
+                        String ticketPrice = eventSnapshot.child("ticketPrice").getValue(String.class);
+                        String imageUrl = eventSnapshot.child("imageUrl").getValue(String.class);
+                        String participants = eventSnapshot.child("attendents").getValue(String.class);
+                        Boolean paidEvent = eventSnapshot.child("paidEvent").getValue(Boolean.class);
 
-                    // Update UI with the retrieved data
-                    eventTitle.setText(name);
-                    eventDate.setText("Date: " + date);
-                    eventAddress.setText("Address: " + location);
-                    eventTime.setText("Time: " + startTime);
-                    eventPrice.setText("R" + ticketPrice);
-                    eventParticipants.setText("Participants: " + "1000");
+                        // Check if the event is paid or if the ticket price is null/empty
+                        if (paidEvent == null || !paidEvent || ticketPrice == null || ticketPrice.isEmpty()) {
+                            eventPrice.setText("Free");
+                            PAID_EVENT = false;
+                        } else {
+                            eventPrice.setText("R" + ticketPrice);
+                            BASE_PRICE = Double.parseDouble(ticketPrice);
+                        }
 
-                    // Set the image using Glide
-                    if (imageUrl != null && !imageUrl.isEmpty()) {
-                        Glide.with(getContext()).load(imageUrl).into(eventImage);
-                    } else {
-                        // Set default image if imageUrl is null or empty
-                        eventImage.setImageResource(R.drawable.springbox);
+                        // Update UI with the retrieved data
+                        eventTitle.setText(name);
+                        eventDate.setText("Date: " + date);
+                        eventAddress.setText("Address: " + location);
+                        eventTime.setText("Time: " + startTime);
+                        eventParticipants.setText("Participants: " + participants);
+
+                        // Set the image using Glide
+                        if (imageUrl != null && !imageUrl.isEmpty()) {
+                            Glide.with(getContext()).load(imageUrl).into(eventImage);
+                        } else {
+                            // Set default image if imageUrl is null or empty
+                            eventImage.setImageResource(R.drawable.springbox);
+                        }
+
+                        // Set the image dimensions programmatically
+                        ViewGroup.LayoutParams layoutParams = eventImage.getLayoutParams();
+                        layoutParams.width = getResources().getDimensionPixelSize(com.intuit.sdp.R.dimen._411sdp);
+                        layoutParams.height = getResources().getDimensionPixelSize(com.intuit.sdp.R.dimen._265sdp);
+                        eventImage.setLayoutParams(layoutParams);
                     }
-
-                    // Set the image dimensions programmatically
-                    ViewGroup.LayoutParams layoutParams = eventImage.getLayoutParams();
-                    layoutParams.width = getResources().getDimensionPixelSize(com.intuit.sdp.R.dimen._411sdp);
-                    layoutParams.height = getResources().getDimensionPixelSize(com.intuit.sdp.R.dimen._265sdp);
-                    eventImage.setLayoutParams(layoutParams);
                 }
             }
 
@@ -176,25 +213,25 @@ public class InfoEvent extends Fragment {
         });
     }
 
-    private @NonNull View SendingBtnToTicketStage(View view) {
-        Button ticketSubmitButton = view.findViewById(R.id.EventSubmitButton);
-        // Set an OnClickListener to handle the button click
-        ticketSubmitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create an instance of ChoosingTicketStage fragment
-                ChoosingTicketStage choosingTicketStage = new ChoosingTicketStage();
+private @NonNull View SendingBtnToTicketStage(View view) {
+    Button ticketSubmitButton = view.findViewById(R.id.EventSubmitButton);
+    // Set an OnClickListener to handle the button click
+    ticketSubmitButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            // Create an instance of ChoosingTicketStage fragment with the event name
+            ChoosingTicketStage choosingTicketStage = ChoosingTicketStage.newInstance(eventName);
 
-                // Use FragmentManager to replace the current fragment with ChoosingTicketStage
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_EventInfo_container, choosingTicketStage);
-                transaction.addToBackStack(null); // Add to back stack to allow back navigation
-                transaction.commit();
-            }
-        });
+            // Use FragmentManager to replace the current fragment with ChoosingTicketStage
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_EventInfo_container, choosingTicketStage);
+            transaction.addToBackStack(null); // Add to back stack to allow back navigation
+            transaction.commit();
+        }
+    });
 
-        return EventInfoValues(view);
-    }
+    return EventInfoValues(view);
+}
 
     private static @NonNull View EventInfoValues(View view) {
         // Find views by ID
@@ -205,10 +242,11 @@ public class InfoEvent extends Fragment {
         TextView eventTime = view.findViewById(R.id.EventTime);
         TextView eventWeather = view.findViewById(R.id.EventWeather);
         TextView eventParticipants = view.findViewById(R.id.EventParticipants);
+        ImageView eventImage = view.findViewById(R.id.EventImage);
 
         // Set dummy values for each view
         eventTitle.setText("Spring bok vs Argentina");
-        supporting.setText("R450");
+        supporting.setText("R 350");
         eventDate.setText("Date: " + "2021-09-22");
         eventAddress.setText("Address: " + "Cape Town Stadium");
         eventTime.setText("Time: " + "14:00");
