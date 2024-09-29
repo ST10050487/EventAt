@@ -1,3 +1,4 @@
+// PaymentMethod.java
 package za.co.varsitycollage.st10050487.eventat.Fragments;
 
 import android.os.Bundle;
@@ -10,20 +11,46 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.google.firebase.database.DatabaseReference;
 
 import za.co.varsitycollage.st10050487.eventat.R;
 
 public class PaymentMethod extends Fragment {
+    private static final String ARG_EVENT_NAME = "eventName";
+    private String eventName;
+
+    public static PaymentMethod newInstance(String eventName)
+    {
+        PaymentMethod fragment = new PaymentMethod();
+        Bundle args = new Bundle();
+        args.putString(ARG_EVENT_NAME, eventName);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public PaymentMethod() {
         // Required empty public constructor
     }
 
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            eventName = getArguments().getString(ARG_EVENT_NAME);
+        }
+
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_payment_method, container, false);
+
+        // Retrieve the passed data from the arguments
+        if (getArguments() != null) {
+            eventName = getArguments().getString(ARG_EVENT_NAME);
+        }
 
         // Find the cardarrowButton and set an OnClickListener
         SendingToAddCardFragment(view);
@@ -33,27 +60,6 @@ public class PaymentMethod extends Fragment {
 
         // Set up "Coming Soon" messages for Google Pay and Apple Pay buttons
         setupComingSoonMessages(view);
-
-        // Find the arrowButton and set an OnClickListener
-        SendingBackToSummaryEvent(view);
-
-        return view;
-    }
-
-
-    private @NonNull View SendingBackToSummaryEvent(View view) {
-        Button arrowButton = view.findViewById(R.id.arrowButton);
-        arrowButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Navigate to ChoosingTicketStage fragment
-                Fragment SummaryEventFragment = new SummaryEvent();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_EventInfo_container, SummaryEventFragment);
-                transaction.addToBackStack(null); // Add to back stack to allow back navigation
-                transaction.commit();
-            }
-        });
 
         return view;
     }
@@ -75,7 +81,7 @@ public class PaymentMethod extends Fragment {
                 @Override
                 public void onClick(View v) {
                     // Create an instance of the Addcard fragment
-                    Fragment addCardFragment = new Addcard();
+                    Fragment addCardFragment = Addcard.newInstance(eventName);
 
                     // Replace the current fragment with the Addcard fragment
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();

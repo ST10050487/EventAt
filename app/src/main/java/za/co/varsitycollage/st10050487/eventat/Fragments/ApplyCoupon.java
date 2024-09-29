@@ -32,16 +32,7 @@ public class ApplyCoupon extends Fragment {
 
         blockInfoViewModel = new ViewModelProvider(requireActivity()).get(BlockInfoViewModel.class);
 
-        Button arrowButton = view.findViewById(R.id.arrowButton);
-        arrowButton.setOnClickListener(v -> {
-            Fragment summaryEventFragment = new SummaryEvent();
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_EventInfo_container, summaryEventFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        });
-
-        Button applyCouponButton = view.findViewById(R.id.TaptoApply);
+             Button applyCouponButton = view.findViewById(R.id.TaptoApply);
         applyCouponButton.setOnClickListener(v -> applyCoupon());
 
         return view;

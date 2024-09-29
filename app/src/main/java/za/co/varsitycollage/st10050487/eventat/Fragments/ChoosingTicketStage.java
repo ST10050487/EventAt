@@ -71,6 +71,14 @@ public class ChoosingTicketStage extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_choosing_ticket_stage, container, false);
 
+        InitalizingDataInfo(view);
+
+        SendingToSummaryEvent();
+
+        return view;
+    }
+
+    private void InitalizingDataInfo(View view) {
         // Initialize Firebase Database reference
         databaseReference = FirebaseDatabase.getInstance().getReference("events");
 
@@ -100,27 +108,19 @@ public class ChoosingTicketStage extends Fragment {
                 ticketNo.setText(String.valueOf(currentNumber - 1));
             }
         });
+    }
 
-        // Navigate back to InfoEvent fragment
-        arrowButton.setOnClickListener(v -> {
-            Fragment infoEventFragment = new InfoEvent();
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_EventInfo_container, infoEventFragment);
-            transaction.addToBackStack(null); // Add to back stack to allow back navigation
-            transaction.commit();
-        });
-
-        // Navigate to SummaryEvent fragment
+    private void SendingToSummaryEvent() {
+        // ChoosingTicketStage.java
         ticketSubmitButton.setOnClickListener(v -> {
-            Fragment summaryEventFragment = new SummaryEvent();
+            Fragment summaryEventFragment = SummaryEvent.newInstance(eventName);
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_EventInfo_container, summaryEventFragment);
             transaction.addToBackStack(null); // Add to back stack to allow back navigation
             transaction.commit();
         });
-
-        return view;
     }
+
 
     private void fetchEventData() {
         if (eventName == null) {

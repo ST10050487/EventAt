@@ -27,13 +27,40 @@ import com.google.firebase.database.ValueEventListener;
 import za.co.varsitycollage.st10050487.eventat.R;
 
 public class SummaryEvent extends Fragment {
+    private static final String ARG_EVENT_NAME = "eventName";
+    private String eventName;
     private BlockInfoViewModel blockInfoViewModel;
     private DatabaseReference databaseReference;
     private ImageView eventImage;
     public static int FinalPrice;
+    private SharedViewModel sharedViewModel;
+    public static String FINAL_EVENT;
 
     public SummaryEvent() {
         // Required empty public constructor
+    }
+
+    public static SummaryEvent newInstance(String eventName) {
+        SummaryEvent fragment = new SummaryEvent();
+        Bundle args = new Bundle();
+        args.putString(ARG_EVENT_NAME, eventName);
+        fragment.setArguments(args);
+        FINAL_EVENT = eventName;
+        return fragment;
+    }
+
+    @Override
+// SummaryEvent.java
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            eventName = getArguments().getString(ARG_EVENT_NAME);
+        }
+
+        // Initialize the ViewModel
+        blockInfoViewModel = new ViewModelProvider(requireActivity()).get(BlockInfoViewModel.class);
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        sharedViewModel.setEventName(eventName);
     }
 
     @Override
@@ -47,54 +74,57 @@ public class SummaryEvent extends Fragment {
         view = UpdatingInfoInTextView(view);
         view = MovingToCoupon(view);
         view = MovingToPayment(view);
-        view = MovingToStageMethod(view);
-
         retrieveEventData(view);
-
         return view;
     }
 
     private void retrieveEventData(View view) {
+        if (eventName == null) {
+            Log.e("SummaryEvent", "Event name is null");
+            return;
+        }
         eventImage = view.findViewById(R.id.EventImage);
-        databaseReference.child("-O7tO1M1ex8AumOmI3sU").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.orderByChild("name").equalTo(eventName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    String eventDate = dataSnapshot.child("date").getValue(String.class);
-                    String eventTime = dataSnapshot.child("startTime").getValue(String.class);
-                    String eventPrice = dataSnapshot.child("ticketPrice").getValue(String.class);
-                    String eventTitle = dataSnapshot.child("name").getValue(String.class);
-                    String eventTitlteinfo = dataSnapshot.child("name").getValue(String.class);
-                    String imageUrl = dataSnapshot.child("imageUrl").getValue(String.class);
+                    for (DataSnapshot eventSnapshot : dataSnapshot.getChildren()) {
+                        String eventDate = eventSnapshot.child("date").getValue(String.class);
+                        String eventTime = eventSnapshot.child("startTime").getValue(String.class);
+                        String eventPrice = eventSnapshot.child("ticketPrice").getValue(String.class);
+                        String eventTitle = eventSnapshot.child("name").getValue(String.class);
+                        String eventTitlteinfo = eventSnapshot.child("name").getValue(String.class);
+                        String imageUrl = eventSnapshot.child("imageUrl").getValue(String.class);
 
-                    TextView eventDateTextView = view.findViewById(R.id.EventDate);
-                    TextView eventTimeTextView = view.findViewById(R.id.EventTime);
-                    TextView eventPriceTextView = view.findViewById(R.id.EventPrice);
-                    TextView eventTitleTextView = view.findViewById(R.id.EventTitle);
-                    TextView eventTitleInfo = view.findViewById(R.id.EventitleInfo);
+                        TextView eventDateTextView = view.findViewById(R.id.EventDate);
+                        TextView eventTimeTextView = view.findViewById(R.id.EventTime);
+                        TextView eventPriceTextView = view.findViewById(R.id.EventPrice);
+                        TextView eventTitleTextView = view.findViewById(R.id.EventTitle);
+                        TextView eventTitleInfo = view.findViewById(R.id.EventitleInfo);
 
-                    if (imageUrl != null && !imageUrl.isEmpty()) {
-                        Glide.with(getContext()).load(imageUrl).into(eventImage);
-                    } else {
-                        eventImage.setImageResource(R.drawable.springbox);
+                        if (imageUrl != null && !imageUrl.isEmpty()) {
+                            Glide.with(getContext()).load(imageUrl).into(eventImage);
+                        } else {
+                            eventImage.setImageResource(R.drawable.springbox);
+                        }
+
+                        eventDateTextView.setText(eventDate);
+                        eventTimeTextView.setText(eventTime);
+                        eventPriceTextView.setText("R" + eventPrice);
+                        eventTitleTextView.setText(eventTitle);
+                        eventTitleInfo.setText(eventTitlteinfo);
+
+                        ViewGroup.LayoutParams layoutParams = eventImage.getLayoutParams();
+                        layoutParams.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 355, getResources().getDisplayMetrics());
+                        layoutParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 181, getResources().getDisplayMetrics());
+                        eventImage.setLayoutParams(layoutParams);
                     }
-
-                    eventDateTextView.setText(eventDate);
-                    eventTimeTextView.setText(eventTime);
-                    eventPriceTextView.setText("R" + eventPrice);
-                    eventTitleTextView.setText(eventTitle);
-                    eventTitleInfo.setText(eventTitlteinfo);
-
-                    ViewGroup.LayoutParams layoutParams = eventImage.getLayoutParams();
-                    layoutParams.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 355, getResources().getDisplayMetrics());
-                    layoutParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 181, getResources().getDisplayMetrics());
-                    eventImage.setLayoutParams(layoutParams);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle possible errors.
+                Log.e("Firebase", "DatabaseError: " + databaseError.getMessage());
             }
         });
     }
@@ -107,6 +137,7 @@ public class SummaryEvent extends Fragment {
                 TextView stagePrice = view.findViewById(R.id.stage_price);
                 TextView totalPrice = view.findViewById(R.id.totalAmount);
                 Button couponArrowButton = view.findViewById(R.id.Couponarrow);
+
 
                 // Extract the block name and price from the blockInfo string
                 String[] parts = blockInfo.split(" R");
@@ -126,7 +157,15 @@ public class SummaryEvent extends Fragment {
                         stagePrice.setText("R" + price);
                         totalPrice.setText("R" + price);
                         couponArrowButton.setEnabled(true);
+
+                        // Parse the price and assign it to FinalPrice
+                        try {
+                            FinalPrice = Integer.parseInt(price);
+                        } catch (NumberFormatException e) {
+                            Log.e("SummaryEvent", "Failed to parse price: " + price, e);
+                        }
                     }
+
 
                     // Update the TextViews
                     ticketStageInfo.setText(blockName);
@@ -153,29 +192,21 @@ public class SummaryEvent extends Fragment {
         return view;
     }
 
+
     private @NonNull View MovingToPayment(View view) {
         Button nextButton = view.findViewById(R.id.EventSubmitButton);
         nextButton.setOnClickListener(v -> {
-            Fragment paymentMethodFragment = new PaymentMethod();
+            // Create the PaymentMethod instance and pass the eventName
+            Fragment paymentMethodFragment = PaymentMethod.newInstance(eventName);
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_EventInfo_container, paymentMethodFragment);
             transaction.addToBackStack(null);
             transaction.commit();
         });
 
-        return view;
-    }
-
-    private @NonNull View MovingToStageMethod(View view) {
-        Button arrowButton = view.findViewById(R.id.arrowButton);
-        arrowButton.setOnClickListener(v -> {
-            Fragment choosingTicketStageFragment = new ChoosingTicketStage();
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_EventInfo_container, choosingTicketStageFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        });
 
         return view;
     }
+
+
 }
