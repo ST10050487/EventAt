@@ -23,27 +23,6 @@ public class EventPromotion extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_event_promotion, container, false);
-
-        return BackToInfoEvent(view);
-    }
-
-    private @NonNull View BackToInfoEvent(View view) {
-        // Set up the arrow button to navigate to InfoEvent
-        Button arrowButton = view.findViewById(R.id.arrowButton);
-        arrowButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create an instance of InfoEvent fragment
-                InfoEvent infoEvent = new InfoEvent();
-
-                // Use FragmentManager to replace the current fragment with InfoEvent
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_EventInfo_container, infoEvent);
-                transaction.addToBackStack(null); // Add to back stack to allow back navigation
-                transaction.commit();
-            }
-        });
-
         return view;
     }
 }
