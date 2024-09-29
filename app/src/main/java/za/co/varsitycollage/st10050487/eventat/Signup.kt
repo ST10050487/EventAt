@@ -1,20 +1,41 @@
 package za.co.varsitycollage.st10050487.eventat
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class Signup : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_signup)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+        setContentView(R.layout.activity_signup) // Ensure this points to your layout file name
+
+        // Initialize views
+        val buttonSignUp: Button = findViewById(R.id.button_sign_up)
+        val buttonGoogle: Button = findViewById(R.id.button_google)
+        val logInTextView: TextView = findViewById(R.id.log_in)
+
+        // Handle "Sign Up" button click
+        buttonSignUp.setOnClickListener {
+            // Perform sign-up action or navigate to the sign-up activity
+            val intent = Intent(this, Registration::class.java) // Replace with your SignUpActivity
+            startActivity(intent)
+        }
+
+        // Handle "Continue with Google" button click
+        buttonGoogle.setOnClickListener {
+            // Implement Google Sign-In functionality
+            // You would typically integrate Google Sign-In SDK here
+            // For example, using Firebase Authentication or Google SignInClient
+        }
+
+        // Handle "Log In" text click
+        logInTextView.setOnClickListener {
+            // Navigate to the login activity
+            val intent = Intent(this, Login::class.java) // Replace with your LoginActivity
+            startActivity(intent)
         }
     }
 }
