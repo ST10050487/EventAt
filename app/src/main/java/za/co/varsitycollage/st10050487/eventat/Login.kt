@@ -18,7 +18,7 @@ class Login : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_login)  // Set this to 'activity_login'
+        setContentView(R.layout.activity_login)
 
         emailInput = findViewById(R.id.email_input)
         passwordInput = findViewById(R.id.password_input)
@@ -32,7 +32,7 @@ class Login : AppCompatActivity() {
                 // Proceed to the main activity after successful validation
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
-                finish() // Finish LoginActivity so user can't go back to login screen
+                finish()
             }
         }
 
