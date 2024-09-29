@@ -24,20 +24,26 @@
         android:text="Event Name"
         android:textStyle="bold"
         android:textSize="16sp"
+        android:ellipsize="end"
+        android:maxLines="1"
         app:layout_constraintStart_toEndOf="@id/event_image"
         app:layout_constraintTop_toTopOf="@id/event_image"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/event_location" />
 
-    <!-- Event location and date -->
+    <!-- Event location -->
     <TextView
         android:id="@+id/event_location"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Event Location"
+        android:ellipsize="end"
+        android:maxLines="1"
         app:layout_constraintStart_toEndOf="@id/event_image"
         app:layout_constraintTop_toBottomOf="@id/event_name"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Event date -->
     <TextView
         android:id="@+id/event_date"
         android:layout_width="0dp"

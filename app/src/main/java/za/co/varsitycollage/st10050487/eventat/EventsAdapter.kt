@@ -1,7 +1,6 @@
 package za.co.varsitycollage.st10050487.eventat
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import za.co.varsitycollage.st10050487.eventat.databinding.EventItemBinding
@@ -32,3 +31,4 @@ class EventsAdapter(private val events: List<Event>) :
         }
     }
 }
+
