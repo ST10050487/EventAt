@@ -19,6 +19,23 @@ import za.co.varsitycollage.st10050487.eventat.Home;
 import za.co.varsitycollage.st10050487.eventat.R;
 
 public class PaymentSuccessful extends Fragment {
+    private static final String ARG_EVENT_NAME = "eventName";
+    private String eventName;
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            eventName = getArguments().getString(ARG_EVENT_NAME);
+        }
+    }
+
+    public static PaymentSuccessful newInstance(String eventName) {
+        PaymentSuccessful fragment = new PaymentSuccessful();
+        Bundle args = new Bundle();
+        args.putString(ARG_EVENT_NAME, eventName);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public PaymentSuccessful() {
         // Required empty public constructor
@@ -48,18 +65,14 @@ public class PaymentSuccessful extends Fragment {
     }
 
     private @NonNull View SendingToTicketdownload(View view) {
-        // Find the 'Download Ticket' button and set a click listener
         Button downloadTicketButton = view.findViewById(R.id.DownloadTicketButton);
-        downloadTicketButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Navigate to ticketDownload fragment
-                Fragment ticketDownloadFragment = new ticketDownload();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_EventInfo_container, ticketDownloadFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
+        downloadTicketButton.setOnClickListener(v -> {
+            // Navigate to ticketDownload fragment
+            Fragment ticketDownloadFragment = ticketDownload.newInstance(eventName);
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_EventInfo_container, ticketDownloadFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
 
         return view;

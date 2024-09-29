@@ -9,16 +9,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 
-class CloseEventInforAdapter(private val eventList : ArrayList<Event>) : RecyclerView.Adapter<CloseEventInforAdapter.ViewHolder>() {
+class CloseEventInforAdapter(
+    private val eventList: ArrayList<Event>,
+    private val onItemClick: (Event) -> Unit
+) : RecyclerView.Adapter<CloseEventInforAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.activity_close_event, parent, false)
         return ViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
         val currentItem = eventList[position]
 
         // Null check for imageUrl and load a placeholder if imageUrl is null
@@ -36,6 +37,11 @@ class CloseEventInforAdapter(private val eventList : ArrayList<Event>) : Recycle
         holder.eventDate.text = currentItem.date
         holder.eventLocation.text = currentItem.location
         holder.eventTicketPrice.text = currentItem.ticketPrice
+
+        // Set click listener
+        holder.itemView.setOnClickListener {
+            onItemClick(currentItem)
+        }
     }
 
     override fun getItemCount(): Int {
