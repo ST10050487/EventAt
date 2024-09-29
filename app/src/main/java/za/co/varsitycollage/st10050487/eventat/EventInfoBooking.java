@@ -12,9 +12,17 @@ public class EventInfoBooking extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_info_booking);
 
-        // Load the InfoEvent fragment
+        // Retrieve the event name from the intent
+        String eventName = getIntent().getStringExtra("EVENT_NAME");
+
+        // Check if eventName is null
+        if (eventName == null) {
+            throw new IllegalArgumentException("Event name cannot be null");
+        }
+
+        // Load the InfoEvent fragment with the event name
         if (savedInstanceState == null) {
-            Fragment infoEventFragment = new InfoEvent();
+            Fragment infoEventFragment = InfoEvent.newInstance(eventName);
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_EventInfo_container, infoEventFragment);
             transaction.commit();
