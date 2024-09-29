@@ -1,10 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/signup_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#1E1E1E"
     tools:context=".Signup">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Sign Up Button Layout -->
+
+    <!-- Login TextView -->
+
+    <View
+        android:id="@+id/image_1"
+        android:layout_width="393dp"
+        android:layout_height="867dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="-11dp"
+        android:background="@drawable/img" />
+
+    <!-- Sign Up Button -->
+
+    <TextView
+        android:id="@+id/log_in"
+        android:layout_width="46dp"
+        android:layout_height="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="160dp"
+        android:layout_marginTop="675dp"
+        android:gravity="center_horizontal|top"
+        android:lineSpacingExtra="-1dp"
+        android:text="@string/log_in"
+        android:textAppearance="@style/log_in"
+        android:textColor="#FFFFFF" />
+
+    <TextView
+        android:id="@+id/plan_your_p"
+        android:layout_width="279dp"
+        android:layout_height="59dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="59dp"
+        android:layout_marginTop="418dp"
+        android:gravity="center_horizontal|top"
+        android:lineSpacingExtra="2dp"
+        android:text="@string/plan_your_p"
+        android:textAppearance="@style/plan_your_p"
+        android:textColor="#FFFFFF"
+        android:translationY="-0.9dp" />
+
+
+
+    <TextView
+        android:id="@+id/beautiful_e"
+        android:layout_width="267dp"
+        android:layout_height="84dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="57dp"
+        android:layout_marginTop="329dp"
+        android:gravity="center_horizontal|top"
+        android:lineSpacingExtra="4dp"
+        android:text="@string/beautiful_e"
+        android:textAppearance="@style/beautiful_e"
+        android:textIsSelectable="false"
+        android:textStyle="bold"
+        android:translationY="-1.93dp" />
+
+    <Button
+        android:id="@+id/button_sign_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/plan_your_p"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="#5F19F2"
+        android:textColor="#FFFFFF"
+        android:text="Sign up"
+        android:textSize="18sp"
+        android:padding="12dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_centerHorizontal="true" />
+
+    <!-- Continue with Google Button -->
+    <Button
+        android:id="@+id/button_google"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_sign_up"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="24dp"
+        android:backgroundTint="#1B112C"
+        android:drawablePadding="10dp"
+        android:padding="12dp"
+        android:text="Continue with Google"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:icon="@drawable/googleg_standard_color_18" />
+
+
+</RelativeLayout>
+
