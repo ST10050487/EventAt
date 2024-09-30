@@ -86,7 +86,6 @@ public class ChoosingTicketStage extends Fragment {
         ticketNo = view.findViewById(R.id.ticketNo);
         ticketAdd = view.findViewById(R.id.ticketAdd);
         ticketMinus = view.findViewById(R.id.ticketMinus);
-        arrowButton = view.findViewById(R.id.arrowButton);
         ticketSubmitButton = view.findViewById(R.id.TicketSubmitButton);
         aBlockButton = view.findViewById(R.id.A_block_txt);
         bBlockButton = view.findViewById(R.id.b_block_txt);
@@ -111,16 +110,18 @@ public class ChoosingTicketStage extends Fragment {
     }
 
     private void SendingToSummaryEvent() {
-        // ChoosingTicketStage.java
         ticketSubmitButton.setOnClickListener(v -> {
-            Fragment summaryEventFragment = SummaryEvent.newInstance(eventName);
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_EventInfo_container, summaryEventFragment);
-            transaction.addToBackStack(null); // Add to back stack to allow back navigation
-            transaction.commit();
+            if (!ticketSubmitButton.isEnabled()) {
+                Toast.makeText(getContext(), "Please select a block price before continuing.", Toast.LENGTH_SHORT).show();
+            } else {
+                Fragment summaryEventFragment = SummaryEvent.newInstance(eventName);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_EventInfo_container, summaryEventFragment);
+                transaction.addToBackStack(null); // Add to back stack to allow back navigation
+                transaction.commit();
+            }
         });
     }
-
 
     private void fetchEventData() {
         if (eventName == null) {
@@ -205,7 +206,7 @@ public class ChoosingTicketStage extends Fragment {
             });
 
             dBlockButton.setOnClickListener(v -> {
-                int randomPrice = 250 + (int) (Math.random() * ((350 - 250) + 1));
+                int randomPrice = (int) Math.round(basePrice);
                 updateBlockInfo("D block (Superior)", randomPrice);
             });
         }
@@ -217,5 +218,8 @@ public class ChoosingTicketStage extends Fragment {
         String blockInfo = blockName + " R" + totalPrice;
         blockInfoViewModel.setBlockInfo(blockInfo);
         Toast.makeText(getContext(), blockInfo, Toast.LENGTH_SHORT).show();
+
+        // Enable the "Submit" button
+        ticketSubmitButton.setEnabled(true);
     }
 }
