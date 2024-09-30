@@ -12,6 +12,11 @@ import kotlinx.coroutines.flow.receiveAsFlow
 class BioMetricPromptManager(
     private val activity: AppCompatActivity // Changed from MainActivity to AppCompatActivity
 ) {
+    // Add this constructor
+    constructor() : this(AppCompatActivity()) {
+        // Initialization code if necessary
+    }
+
     private val resultChannel = Channel<BiometricResult>()
     val promptResult = resultChannel.receiveAsFlow()
 
@@ -88,6 +93,7 @@ class BioMetricPromptManager(
         // Trigger the authentication
         prompt.authenticate(promptInfo)
     }
+
     // Method to check if biometric authentication is not set
     fun isBiometricAuthenticationNotSet(): Boolean {
         val manager = BiometricManager.from(activity)
@@ -104,4 +110,3 @@ class BioMetricPromptManager(
         data object AuthenticationNotSet : BiometricResult
     }
 }
-
