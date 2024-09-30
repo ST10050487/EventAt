@@ -44,15 +44,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile_title" />
 
-    <!-- Name EditText -->
+    <!-- first name EditText -->
     <EditText
-        android:id="@+id/name_edit_text"
+        android:id="@+id/first_name_edit_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:drawableEnd="@drawable/editeicon"
-        android:hint="Name"
+        android:hint="First Name"
         android:padding="12dp"
-        android:text="Tanaka Kandima"
         android:textColor="#2D394E"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,20 +59,19 @@
         app:layout_constraintTop_toBottomOf="@id/profile_picture"
         android:layout_marginTop="16dp" />
 
-    <!-- Birthdate EditText -->
+    <!-- surname EditText -->
     <EditText
-        android:id="@+id/birthdate_edit_text"
+        android:id="@+id/surname_edit_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:drawableEnd="@drawable/editeicon"
-        android:hint="Birthdate"
+        android:hint="Surname"
         android:padding="12dp"
-        android:text="03/03/2000"
         android:textColor="#2D394E"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/name_edit_text"
+        app:layout_constraintTop_toBottomOf="@id/first_name_edit_text"
         android:layout_marginTop="16dp" />
 
     <!-- Email EditText -->
@@ -84,12 +82,11 @@
         android:drawableEnd="@drawable/editeicon"
         android:hint="Email"
         android:padding="12dp"
-        android:text="aayush.kriti3@gmail.com"
         android:textColor="#2D394E"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/birthdate_edit_text"
+        app:layout_constraintTop_toBottomOf="@id/surname_edit_text"
         android:layout_marginTop="16dp" />
 
     <!-- Save Button -->
