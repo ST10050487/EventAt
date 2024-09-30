@@ -82,11 +82,13 @@ class Login : AppCompatActivity() {
                             // Displaying Successfully login message
                             Toast.makeText(this@Login, "Login successful!", Toast.LENGTH_SHORT).show()
 
-                            // Saving the user`s login information using shared preferences
+                            // Saving the user's login information using shared preferences
                             saveUserLoginInfo(email)
 
-                            // Moving to the GoogleMapsAPI activity
-                            val intent = Intent(this@Login, GoogleMapsAPI::class.java)
+                            // Moving to the GoogleMapsAPI activity with source as "Login"
+                            val intent = Intent(this@Login, GoogleMapsAPI::class.java).apply {
+                                putExtra("source", "Login")
+                            }
                             startActivity(intent)
                             finish()
                         } else {
@@ -107,6 +109,7 @@ class Login : AppCompatActivity() {
             }
         })
     }
+
 
     // Function to save user login info using SharedPreferences
     private fun saveUserLoginInfo(email: String) {
