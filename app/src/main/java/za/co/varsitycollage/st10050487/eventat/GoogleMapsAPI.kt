@@ -6,9 +6,11 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -50,6 +52,22 @@ class GoogleMapsAPI : AppCompatActivity(), OnMapReadyCallback {
         // Get source from Intent
         var source = intent.getStringExtra("source")
 
+        // Get the TextView by its ID
+        val selectLocationTextView = findViewById<TextView>(R.id.selectLocation)
+
+        // Set the text based on the source value
+        when (source) {
+            "CreateEvent" -> {
+                selectLocationTextView.text = "Search and Select Location Of Event"
+            }
+            "Login" -> {
+                selectLocationTextView.text = "Search and Select Your Current Location"
+            }
+            else -> {
+                selectLocationTextView.text = "Search and Select Location"
+            }
+        }
+
         // Set up PlaceSelectionListener
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
@@ -66,7 +84,6 @@ class GoogleMapsAPI : AppCompatActivity(), OnMapReadyCallback {
                     // Check for null source and set a fallback
                     if (source == null) {
                         Log.e("GoogleMapsAPI", "Source is null, defaulting to 'Unknown'")
-                        // You can assign a default value or handle the case as necessary
                         source = "Unknown"
                     }
 
@@ -81,20 +98,18 @@ class GoogleMapsAPI : AppCompatActivity(), OnMapReadyCallback {
                         // Save the selected location in Firebase for the logged-in user
                         saveLocationToFirebase(place.name)
                         finish()
-
                     }
                 }
             }
-
-            override fun onError(status: com.google.android.gms.common.api.Status) {
+            override fun onError(status: Status) {
                 Log.e("GoogleMapsAPI", "An error occurred: $status")
             }
         })
-
-        // Request location permissions
+    // Request location permissions
         requestLocationPermissions()
     }
 
+    // A function to request location permissions
     private fun requestLocationPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED) {
@@ -104,6 +119,7 @@ class GoogleMapsAPI : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    // A function to enable location layer if permission is granted
     @SuppressLint("MissingPermission")
     private fun enableMyLocation() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -112,6 +128,7 @@ class GoogleMapsAPI : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    // A function to handle permission request results
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
@@ -127,6 +144,7 @@ class GoogleMapsAPI : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    // A function to handle map ready event
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
         // Set default location (optional)
@@ -136,6 +154,7 @@ class GoogleMapsAPI : AppCompatActivity(), OnMapReadyCallback {
         enableMyLocation()
     }
 
+    // A function to save the selected location to Firebase
     private fun saveLocationToFirebase(locationName: String) {
         // Retrieve logged-in user email from SharedPreferences
         val sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE)
@@ -153,8 +172,9 @@ class GoogleMapsAPI : AppCompatActivity(), OnMapReadyCallback {
                     for (userSnapshot in snapshot.children) {
                         val email = userSnapshot.child("email").getValue(String::class.java)
                         if (email == loggedInUserEmail) {
-                            userId = userSnapshot.key // Get the user ID
-                            break // Exit loop once the user is found
+                            // Getting the user ID
+                            userId = userSnapshot.key
+                            break
                         }
                     }
 
@@ -170,7 +190,7 @@ class GoogleMapsAPI : AppCompatActivity(), OnMapReadyCallback {
                                 // Navigate to the Home class
                                 val intent = Intent(this@GoogleMapsAPI, Home::class.java)
                                 startActivity(intent)
-                                // Finish the current activity
+                                // Closing the current activity
                                 finish()
                             }
                             .addOnFailureListener { e ->
