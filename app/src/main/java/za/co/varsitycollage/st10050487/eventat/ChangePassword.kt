@@ -2,6 +2,7 @@ package za.co.varsitycollage.st10050487.eventat
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -34,11 +35,12 @@ class ChangePassword : AppCompatActivity() {
         confirmPasswordInput = findViewById(R.id.confirm_password)
         saveButton = findViewById(R.id.save_button)
         backArrow = findViewById(R.id.back_arrow)
-        currentPasswordTextView = findViewById(R.id.current_password)
 
         // Initialize Firebase Database
         database = FirebaseDatabase.getInstance().reference
-        sharedPreferences = getSharedPreferences("YourPrefsName", MODE_PRIVATE)
+
+        // Correct SharedPreferences name
+        sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE)
 
         // Fetch and display the current password
         fetchCurrentPassword()
@@ -57,7 +59,7 @@ class ChangePassword : AppCompatActivity() {
                 newPasswordInput.error = "Please enter a new password"
                 confirmPasswordInput.error = "Please confirm the new password"
             } else if (newPassword.length < 6) {
-               newPasswordInput.error = "Password must be at least 6 characters"
+                newPasswordInput.error = "Password must be at least 6 characters"
             } else if (newPassword != confirmPassword) {
                 confirmPasswordInput.error = "Passwords do not match"
             } else {
@@ -68,30 +70,23 @@ class ChangePassword : AppCompatActivity() {
     }
 
     private fun fetchCurrentPassword() {
-        // Retrieve logged-in user email from SharedPreferences
         val loggedInUserEmail = sharedPreferences.getString("loggedInUserEmail", null)
 
         if (loggedInUserEmail != null) {
-            // Replace dots in the email to ensure it's Firebase-safe
             val safeEmail = loggedInUserEmail.replace(".", "_")
 
-            // Reference the Users node in Firebase
             val usersRef = FirebaseDatabase.getInstance().getReference("Users")
 
-            // Search for the user with the given email
             usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     var userId: String? = null
 
-                    // Loop through all users to find the one matching the email
                     for (userSnapshot in snapshot.children) {
                         val email = userSnapshot.child("email").getValue(String::class.java)
                         if (email == loggedInUserEmail) {
-                            userId = userSnapshot.key // Get the user ID
-                            // Fetch the current password
+                            userId = userSnapshot.key
                             val currentPassword = userSnapshot.child("password").getValue(String::class.java)
-                            currentPasswordTextView.text = currentPassword // Display it
-                            break // Exit the loop once the user is found
+                            break
                         }
                     }
 
@@ -110,7 +105,6 @@ class ChangePassword : AppCompatActivity() {
     }
 
     private fun changePassword(newPassword: String) {
-        // Update the password in the database
         val loggedInUserEmail = sharedPreferences.getString("loggedInUserEmail", null)
 
         if (loggedInUserEmail != null) {
@@ -122,12 +116,17 @@ class ChangePassword : AppCompatActivity() {
                     for (userSnapshot in snapshot.children) {
                         val email = userSnapshot.child("email").getValue(String::class.java)
                         if (email == loggedInUserEmail) {
-                            // Update the password
                             userSnapshot.ref.child("password").setValue(newPassword)
                                 .addOnSuccessListener {
+                                    // Display success message
                                     Toast.makeText(this@ChangePassword, "Password changed successfully!", Toast.LENGTH_SHORT).show()
+
+                                    // Clear the input fields
+                                    newPasswordInput.text.clear()
+                                    confirmPasswordInput.text.clear()
                                 }
                                 .addOnFailureListener {
+                                    // Display failure message
                                     Toast.makeText(this@ChangePassword, "Failed to change password", Toast.LENGTH_SHORT).show()
                                 }
                             break
@@ -141,4 +140,5 @@ class ChangePassword : AppCompatActivity() {
             })
         }
     }
+
 }
