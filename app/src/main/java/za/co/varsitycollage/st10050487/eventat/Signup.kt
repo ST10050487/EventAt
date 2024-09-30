@@ -3,6 +3,7 @@ package za.co.varsitycollage.st10050487.eventat
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,7 +16,7 @@ class Signup : AppCompatActivity() {
 
         // Initialize views
         val buttonSignUp: Button = findViewById(R.id.button_sign_up)
-        val buttonGoogle: Button = findViewById(R.id.button_google)
+        val buttonGoogle: LinearLayout = findViewById(R.id.button_google)
         val logInTextView: TextView = findViewById(R.id.log_in)
 
         // Disable the Google button and set a message
