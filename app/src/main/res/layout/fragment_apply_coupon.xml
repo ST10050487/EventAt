@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.ApplyCoupon">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/heading"
+            android:layout_width="198dp"
+            android:layout_height="62dp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:gravity="center"
+            android:text="Apply Coupon"
+            android:textAppearance="@style/supporting_"
+            android:textColor="@color/purple"
+            android:textSize="@dimen/_20ssp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/square2"
+            android:layout_width="@dimen/_270sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginStart="@dimen/_19sdp"
+            android:layout_marginTop="@dimen/_32sdp"
+            android:background="@drawable/squareshape"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/heading">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/stage_price"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="center_vertical"
+                    android:hint="Enter Coupon \nCode"
+                    android:inputType="text"
+                    android:lineSpacingExtra="3sp"
+                    android:textAppearance="@style/supporting_"
+                    android:textColor="#D0D0D0" />
+
+                <TextView
+                    android:id="@+id/SearchBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:lineSpacingExtra="3sp"
+                    android:text="SEARCH"
+                    android:textAppearance="@style/supporting_"
+                    android:textColor="#D0D0D0"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/square2">
+
+            <View
+                android:id="@+id/vector_24_start"
+                android:layout_width="@dimen/_2sdp"
+                android:layout_height="@dimen/_73sdp"
+                android:layout_marginStart="@dimen/_38sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:background="@drawable/line"
+                android:rotation="90" />
+
+            <TextView
+                android:id="@+id/Offerheading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_48sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:gravity="center_horizontal|center_vertical"
+                android:lineSpacingExtra="0sp"
+                android:text="Best offers for you"
+                android:textAppearance="@style/supporting_"
+                android:textColor="@color/purple" />
+
+            <View
+                android:id="@+id/vector_24_end"
+                android:layout_width="@dimen/_2sdp"
+                android:layout_height="@dimen/_73sdp"
+                android:layout_marginStart="@dimen/_38sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_56sdp"
+                android:background="@drawable/line"
+                android:rotation="90" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/CoupounInfo"
+            android:layout_width="@dimen/_305sdp"
+            android:layout_height="@dimen/_137sdp"
+            android:layout_marginStart="@dimen/_7sdp"
+            android:layout_marginTop="@dimen/_52sdp"
+            android:background="@drawable/purplerectangle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/mastercard_image"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:src="@drawable/mastercard" />
+
+                <ImageView
+                    android:id="@+id/visa_image"
+                    android:layout_width="@dimen/_40sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:src="@drawable/visa" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_108sdp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/firstLineofCoupounOffer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:lineSpacingExtra="3sp"
+                    android:text="R 10 - 100 Discount Offer"
+                    android:textAppearance="@style/supporting_1"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/secondLineofCoupounOffer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_28sdp"
+                    android:gravity="center_vertical"
+                    android:lineSpacingExtra="@dimen/_7ssp"
+                    android:text="Get up R100 cashback with this code"
+                    android:textAppearance="@style/supporting_2" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/supporting_left"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:lineSpacingExtra="3sp"
+                        android:text="Nedbank"
+                        android:textAppearance="@style/supporting_1"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/supporting_right"
+                        android:layout_width="@dimen/_11sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/_48sdp"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:lineSpacingExtra="3sp"
+                        android:text="AB123@"
+                        android:textAppearance="@style/supporting_1"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/TaptoApply"
+                android:layout_width="112dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="center"
+                android:lineSpacingExtra="3sp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="0dp"
+                android:text="TAP TO APPLY"
+                android:textAppearance="@style/supporting_1"
+                android:textStyle="bold" />
+        </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

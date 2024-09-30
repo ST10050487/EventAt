@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/signup_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#1E1E1E"
+        tools:context=".Signup">
+
+        <View
+            android:id="@+id/image_1"
+            android:layout_width="520dp"
+            android:layout_height="925dp"
+            android:layout_marginLeft="-5dp"
+            android:background="@drawable/img"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/log_in"
+            android:layout_width="@dimen/_46sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginStart="192dp"
+            android:layout_marginTop="812dp"
+            android:gravity="center_horizontal|top"
+            android:lineSpacingExtra="-1dp"
+            android:text="@string/log_in"
+            android:textAppearance="@style/log_in"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_15ssp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/plan_your_p"
+            android:layout_width="401dp"
+            android:layout_height="130dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="372dp"
+            android:gravity="center"
+            android:lineSpacingExtra="2dp"
+            android:text="@string/plan_your_p"
+            android:textAppearance="@style/plan_your_p"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_15ssp"
+            android:textStyle="bold"
+            android:translationY="-0.9dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/beautiful_e"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="188dp"
+            android:gravity="center_horizontal|top"
+            android:lineSpacingExtra="@dimen/_4sdp"
+            android:text="@string/beautiful_e"
+            android:textAppearance="@style/beautiful_e"
+            android:textIsSelectable="false"
+            android:textStyle="bold"
+            android:translationY="-1.93dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_sign_up"
+            android:layout_width="380dp"
+            android:layout_height="68dp"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_50sdp"
+            android:layout_marginEnd="@dimen/_24sdp"
+            android:backgroundTint="#5F19F2"
+            android:padding="@dimen/_12sdp"
+            android:text="Sign up"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/plan_your_p" />
+
+        <LinearLayout
+            android:id="@+id/button_google"
+            android:layout_width="363dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginTop="@dimen/_28sdp"
+            android:layout_marginEnd="@dimen/_24sdp"
+            android:background="@drawable/button_sign"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/_12sdp"
+            app:layout_constraintTop_toBottomOf="@id/button_sign_up"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:src="@drawable/googleg_standard_color_18" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Continue with Google"
+                android:fontFamily="@font/noto_sans_bold"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/_18ssp" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

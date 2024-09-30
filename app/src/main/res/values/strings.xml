@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">EventAt</string>
+    <string name="MAPS_KEY">AIzaSyA0cwP4K96EoVriVgzQtC-NSJySWzLIEAE</string>
+    <string name="book_ticket">Book Ticket</string>
+    <string name="supporting_7" />
+    <string name="buy_ticket" />
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="log_in">Log in</string>
+   <string name="plan_your_p">Plan your perfect event—choose your venue,set your schedule, and \nmanage every detail with ease.
+</string>
+    <string name="beautiful_e">Beautiful events to\nBook around you.</string>
+
 </resources>

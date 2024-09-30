@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.Addcard">
+
+    <TextView
+        android:id="@+id/heading"
+        android:layout_width="412dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:lineSpacingExtra="-7sp"
+        android:text="Add a Card"
+        android:textAppearance="@style/supporting_"
+        android:textColor="@color/purple"
+        android:textSize="@dimen/_20ssp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+    <EditText
+        android:id="@+id/cardname"
+        android:layout_width="381dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@null"
+        android:gravity="center_vertical"
+        android:hint="Name of Card"
+        android:lineSpacingExtra="1sp"
+        android:textAppearance="@style/supporting_"
+        android:textColor="#828283"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/heading" />
+
+    <View
+        android:id="@+id/underline1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/underliine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardname" />
+
+    <EditText
+        android:id="@+id/cardnumber"
+        android:layout_width="411dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="48dp"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="1sp"
+        android:background="@null"
+        android:hint="Card Number"
+        android:textAppearance="@style/supporting_"
+        android:textColor="#828283"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/underline1" />
+
+    <View
+        android:id="@+id/underline2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/underliine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardnumber" />
+
+    <EditText
+        android:id="@+id/ExpiryDate"
+        android:layout_width="407dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="80dp"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="1sp"
+        android:hint="Expiry date (MM/YY)"
+        android:background="@null"
+        android:textAppearance="@style/supporting_"
+        android:textColor="#828283"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/underline2" />
+
+    <View
+        android:id="@+id/underline3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/underliine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ExpiryDate" />
+
+    <EditText
+        android:id="@+id/Cvv"
+        android:layout_width="409dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="80dp"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="1sp"
+        android:hint="Enter CVV"
+        android:textAppearance="@style/supporting_"
+        android:textColor="#828283"
+        android:textSize="15sp"
+        android:background="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/underline3" />
+
+    <View
+        android:id="@+id/underline4"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/underliine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Cvv" />
+
+    <Button
+        android:id="@+id/MakePaymentButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="116dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/continuue_b"
+        android:text="Make Payment"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/underline4" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
