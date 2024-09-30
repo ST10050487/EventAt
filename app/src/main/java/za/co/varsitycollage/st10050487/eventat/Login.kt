@@ -33,9 +33,8 @@ class Login : AppCompatActivity() {
         emailInput = findViewById(R.id.email_input)
         passwordInput = findViewById(R.id.password_input)
         loginBtn = findViewById(R.id.login_btn)
-        signUpText = findViewById(R.id.sign_up_text) // ID for Sign Up TextView
-        forgotPasswordText = findViewById(R.id.forgot_password) // ID for Forgot Password TextView
-
+        signUpText = findViewById(R.id.sign_up_text)
+        forgotPasswordText = findViewById(R.id.forgot_password)
         // Disable the "Forgot Password" text and make it non-clickable
         forgotPasswordText.isEnabled = false
         forgotPasswordText.setTextColor(Color.GRAY) // You can change the color to make it look disabled
