@@ -8,14 +8,22 @@ import android.widget.TextView
 import android.widget.Toast
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class Registration : AppCompatActivity() {
 
+    // Declaring Firebase Database reference
+    private lateinit var database: DatabaseReference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_registration) // Make sure this references your XML layout
+        setContentView(R.layout.activity_registration)
 
-        // Initialize views
+        // Initializing Firebase Database reference
+        database = FirebaseDatabase.getInstance().getReference("Users")
+
+        // Initializing views
         val editTextFullName: EditText = findViewById(R.id.editTextFullName)
         val editTextSurname: EditText = findViewById(R.id.editTextSurname)
         val editTextEmail: EditText = findViewById(R.id.editTextEmail)
@@ -23,14 +31,14 @@ class Registration : AppCompatActivity() {
         val buttonSignUp: Button = findViewById(R.id.buttonSignUp)
         val textViewSignIn: TextView = findViewById(R.id.you_have_ac)
 
-        // Handle "Create account" button click
+
         buttonSignUp.setOnClickListener {
             val fullName = editTextFullName.text.toString().trim()
             val surname = editTextSurname.text.toString().trim()
             val email = editTextEmail.text.toString().trim()
             val password = editTextPassword.text.toString().trim()
 
-            // Validate input fields
+            // Validating user input
             if (fullName.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
             } else if (!isValidEmail(email)) {
@@ -39,17 +47,14 @@ class Registration : AppCompatActivity() {
                 Toast.makeText(this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show()
             } else {
                 // If all validations pass
-                Toast.makeText(this, "Account created successfully", Toast.LENGTH_SHORT).show()
-
-                // Proceed with account creation logic here (e.g., store in DB, call API)
+                createUser(fullName, surname, email, password)
             }
         }
 
-        // Handle "Sign in" text click
+        // Handling "Sign in" text click
         textViewSignIn.setOnClickListener {
             // Redirect to login screen or perform other logic
             Toast.makeText(this, "Redirecting to sign in", Toast.LENGTH_SHORT).show()
-
 
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
@@ -59,5 +64,28 @@ class Registration : AppCompatActivity() {
     // Helper function to validate email format
     private fun isValidEmail(email: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    // Function to store user data in Firebase
+    private fun createUser(fullName: String, surname: String, email: String, password: String) {
+        // Generate unique user ID using push().key
+        val userId = database.push().key
+
+        if (userId != null) {
+            val user = User(fullName, surname, email, password)
+
+            // Store user data in Firebase under "Users" node
+            database.child(userId).setValue(user).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(this, "Account created successfully", Toast.LENGTH_SHORT).show()
+
+                    // Redirect to another screen, e.g., login
+                    val intent = Intent(this, Login::class.java)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this, "Account creation failed", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 }

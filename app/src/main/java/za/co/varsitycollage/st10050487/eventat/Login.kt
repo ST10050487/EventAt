@@ -5,34 +5,37 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
-import androidx.activity.enableEdgeToEdge
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.database.*
 
 class Login : AppCompatActivity() {
-    lateinit var emailInput : EditText
-    lateinit var passwordInput : EditText
-    lateinit var loginBtn : Button
+    lateinit var emailInput: EditText
+    lateinit var passwordInput: EditText
+    lateinit var loginBtn: Button
+
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_login)
 
+        // Initializing the Firebase reference
+        database = FirebaseDatabase.getInstance().getReference("Users")
+
+        // Initializing views
         emailInput = findViewById(R.id.email_input)
         passwordInput = findViewById(R.id.password_input)
         loginBtn = findViewById(R.id.login_btn)
 
         loginBtn.setOnClickListener {
-            val email = emailInput.text.toString()
-            val password = passwordInput.text.toString()
+            val email = emailInput.text.toString().trim()
+            val password = passwordInput.text.toString().trim()
 
             if (isValidCredentials(email, password)) {
-                // Proceed to the main activity after successful validation
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
+                loginUser(email, password)
             }
         }
 
@@ -43,7 +46,7 @@ class Login : AppCompatActivity() {
         }
     }
 
-    // Email and Password validation
+    // Validating the Email and Password validation
     private fun isValidCredentials(email: String, password: String): Boolean {
         return when {
             TextUtils.isEmpty(email) -> {
@@ -65,4 +68,52 @@ class Login : AppCompatActivity() {
             else -> true
         }
     }
+
+    // A function to check if the user exists in the Firebase Realtime Database
+    private fun loginUser(email: String, password: String) {
+        // Querying the Firebase to find user by email
+        val query = database.orderByChild("email").equalTo(email)
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (userSnapshot in snapshot.children) {
+                        val storedPassword = userSnapshot.child("password").value.toString()
+                        if (storedPassword == password) {
+                            // Displaying Successfully login message
+                            Toast.makeText(this@Login, "Login successful!", Toast.LENGTH_SHORT).show()
+
+                            // Saving the user`s login information using shared preferences
+                            saveUserLoginInfo(email)
+
+                            // Moving to the GoogleMapsAPI activity
+                            val intent = Intent(this@Login, GoogleMapsAPI::class.java)
+                            startActivity(intent)
+                            finish()
+                        } else {
+                            // Login failed
+                            emailInput.error = "Login Failed"
+                            passwordInput.error = "Login Failed"
+                        }
+                    }
+                } else {
+                    // Login failed
+                    emailInput.error = "Login Failed"
+                    passwordInput.error = "Login Failed"
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@Login, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    // Function to save user login info using SharedPreferences
+    private fun saveUserLoginInfo(email: String) {
+        val sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("loggedInUserEmail", email)
+        editor.apply()
+    }
 }
+
