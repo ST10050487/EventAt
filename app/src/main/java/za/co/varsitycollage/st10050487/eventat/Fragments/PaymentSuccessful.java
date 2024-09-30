@@ -68,7 +68,7 @@ public class PaymentSuccessful extends Fragment {
         Button downloadTicketButton = view.findViewById(R.id.DownloadTicketButton);
         downloadTicketButton.setOnClickListener(v -> {
             // Navigate to ticketDownload fragment
-            Fragment ticketDownloadFragment = ticketDownload.newInstance(eventName);
+            Fragment ticketDownloadFragment  = new ticketDownload();
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_EventInfo_container, ticketDownloadFragment);
             transaction.addToBackStack(null);

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -32,8 +33,7 @@ public class SummaryEvent extends Fragment {
     private BlockInfoViewModel blockInfoViewModel;
     private DatabaseReference databaseReference;
     private ImageView eventImage;
-    public static int FinalPrice;
-    private SharedViewModel sharedViewModel;
+    public static String FinalPrice;
     public static String FINAL_EVENT;
 
     public SummaryEvent() {
@@ -50,7 +50,6 @@ public class SummaryEvent extends Fragment {
     }
 
     @Override
-// SummaryEvent.java
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -59,8 +58,6 @@ public class SummaryEvent extends Fragment {
 
         // Initialize the ViewModel
         blockInfoViewModel = new ViewModelProvider(requireActivity()).get(BlockInfoViewModel.class);
-        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        sharedViewModel.setEventName(eventName);
     }
 
     @Override
@@ -131,13 +128,14 @@ public class SummaryEvent extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private @NonNull View UpdatingInfoInTextView(View view) {
-        blockInfoViewModel.getBlockInfo().observe(getViewLifecycleOwner(), blockInfo -> {
+        blockInfoViewModel.getBlockInfo().observe(getViewLifecycleOwner(), blockInfo ->
+        {
             if (blockInfo != null) {
                 TextView ticketStageInfo = view.findViewById(R.id.ticketstageinfo);
                 TextView stagePrice = view.findViewById(R.id.stage_price);
                 TextView totalPrice = view.findViewById(R.id.totalAmount);
                 Button couponArrowButton = view.findViewById(R.id.Couponarrow);
-
+                Button EventSubmitButton = view.findViewById(R.id.EventSubmitButton);
 
                 // Extract the block name and price from the blockInfo string
                 String[] parts = blockInfo.split(" R");
@@ -152,23 +150,18 @@ public class SummaryEvent extends Fragment {
                         stagePrice.setText("Free");
                         totalPrice.setText("Free");
                         couponArrowButton.setEnabled(false);
+                        FinalPrice = "Free";
                     } else {
                         // If the event is paid, set the actual prices
                         stagePrice.setText("R" + price);
                         totalPrice.setText("R" + price);
                         couponArrowButton.setEnabled(true);
-
-                        // Parse the price and assign it to FinalPrice
-                        try {
-                            FinalPrice = Integer.parseInt(price);
-                        } catch (NumberFormatException e) {
-                            Log.e("SummaryEvent", "Failed to parse price: " + price, e);
-                        }
+                        FinalPrice = price;
                     }
-
 
                     // Update the TextViews
                     ticketStageInfo.setText(blockName);
+
                 } else {
                     // Log an error if the blockInfo string is not in the expected format
                     Log.e("SummaryEvent", "Unexpected blockInfo format: " + blockInfo);
@@ -192,21 +185,21 @@ public class SummaryEvent extends Fragment {
         return view;
     }
 
-
     private @NonNull View MovingToPayment(View view) {
         Button nextButton = view.findViewById(R.id.EventSubmitButton);
         nextButton.setOnClickListener(v -> {
-            // Create the PaymentMethod instance and pass the eventName
-            Fragment paymentMethodFragment = PaymentMethod.newInstance(eventName);
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_EventInfo_container, paymentMethodFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
+            if (!nextButton.isEnabled()) {
+                Toast.makeText(getContext(), "Please select a block price before continuing.", Toast.LENGTH_SHORT).show();
+            } else {
+                // Create the PaymentMethod instance and pass the eventName
+                Fragment paymentMethodFragment = PaymentMethod.newInstance(eventName);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_EventInfo_container, paymentMethodFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
         });
-
 
         return view;
     }
-
-
 }
