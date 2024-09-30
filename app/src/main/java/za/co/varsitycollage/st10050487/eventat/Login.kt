@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -15,6 +16,8 @@ class Login : AppCompatActivity() {
     lateinit var emailInput: EditText
     lateinit var passwordInput: EditText
     lateinit var loginBtn: Button
+    lateinit var signUpText: TextView
+    lateinit var forgotPasswordText: TextView
 
     private lateinit var database: DatabaseReference
 
@@ -29,6 +32,8 @@ class Login : AppCompatActivity() {
         emailInput = findViewById(R.id.email_input)
         passwordInput = findViewById(R.id.password_input)
         loginBtn = findViewById(R.id.login_btn)
+        signUpText = findViewById(R.id.sign_up_text) // ID for Sign Up TextView
+        forgotPasswordText = findViewById(R.id.forgot_password) // ID for Forgot Password TextView
 
         loginBtn.setOnClickListener {
             val email = emailInput.text.toString().trim()
@@ -37,6 +42,18 @@ class Login : AppCompatActivity() {
             if (isValidCredentials(email, password)) {
                 loginUser(email, password)
             }
+        }
+
+        // Navigate to the Sign Up page
+        signUpText.setOnClickListener {
+            val intent = Intent(this, Signup::class.java)
+            startActivity(intent)
+        }
+
+        // Navigate to the Reset Password page
+        forgotPasswordText.setOnClickListener {
+            val intent = Intent(this, ResetPassword::class.java)
+            startActivity(intent)
         }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -110,7 +127,6 @@ class Login : AppCompatActivity() {
         })
     }
 
-
     // Function to save user login info using SharedPreferences
     private fun saveUserLoginInfo(email: String) {
         val sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE)
@@ -119,4 +135,5 @@ class Login : AppCompatActivity() {
         editor.apply()
     }
 }
+
 
