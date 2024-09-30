@@ -8,9 +8,8 @@
 
 
     <string name="log_in">Log in</string>
-    <string name="plan_your_p">
-        Plan your perfect event—choose your venue, set your schedule, and manage every detail with ease.
-    </string>
+   <string name="plan_your_p">Plan your perfect event—choose your venue,set your schedule, and \nmanage every detail with ease.
+</string>
     <string name="beautiful_e">Beautiful events to\nBook around you.</string>
 
 </resources>
