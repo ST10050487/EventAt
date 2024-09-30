@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class Signup : AppCompatActivity() {
@@ -17,21 +18,20 @@ class Signup : AppCompatActivity() {
         val buttonGoogle: Button = findViewById(R.id.button_google)
         val logInTextView: TextView = findViewById(R.id.log_in)
 
-        // Handle "Sign Up" button click
+        // Disable the Google button and set a message
+        buttonGoogle.isEnabled = false
+        buttonGoogle.setOnClickListener {
+            Toast.makeText(this, "Google sign-in is currently disabled", Toast.LENGTH_SHORT).show()
+        }
+
+// Handle "Sign Up" button click
         buttonSignUp.setOnClickListener {
             // Perform sign-up action or navigate to the sign-up activity
             val intent = Intent(this, Registration::class.java) // Replace with your SignUpActivity
             startActivity(intent)
         }
 
-        // Handle "Continue with Google" button click
-        buttonGoogle.setOnClickListener {
-            // Implement Google Sign-In functionality
-            // You would typically integrate Google Sign-In SDK here
-            // For example, using Firebase Authentication or Google SignInClient
-        }
-
-        // Handle "Log In" text click
+// Handle "Log In" text click
         logInTextView.setOnClickListener {
             // Navigate to the login activity
             val intent = Intent(this, Login::class.java) // Replace with your LoginActivity
