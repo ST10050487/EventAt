@@ -72,7 +72,8 @@ class CreateEvent : Fragment() {
     //Storing the selected image URI
     private val getImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         uri?.let {
-            imageUri = it // Save the selected image URI
+            // Saving the selected image URI
+            imageUri = it
             selectedImageView.visibility = View.VISIBLE
             selectedImageView.setImageURI(it)
         }
@@ -162,6 +163,7 @@ class CreateEvent : Fragment() {
         // Setting up click listener for the event location TextView
         eventLocationTextView.setOnClickListener {
             val intent = Intent(requireContext(), GoogleMapsAPI::class.java)
+            intent.putExtra("source", "CreateEvent")
             getLocationLauncher.launch(intent)
         }
         // Setting up click listener for the reset button

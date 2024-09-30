@@ -1,11 +1,13 @@
 package za.co.varsitycollage.st10050487.eventat.Fragments
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
@@ -29,6 +31,8 @@ class HomeScreen : Fragment() {
     private lateinit var upcomingEventAdapter: UpcomingEventInforAdapter
     private lateinit var closeEventsRecyclerView: RecyclerView
     private lateinit var upcomingEventsRecyclerView: RecyclerView
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var locationTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,9 +76,14 @@ class HomeScreen : Fragment() {
         }
         upcomingEventsRecyclerView.adapter = upcomingEventAdapter
 
+        // Fetch logged-in user data
+        sharedPreferences = requireActivity().getSharedPreferences("userPrefs", 0)
+        locationTextView = view.findViewById(R.id.location)
+
         // Fetch data
         getUserData()
         getUpcomingEvents(upcomingEventList, upcomingEventAdapter)
+        getUserLocation()  // New method to fetch and display last user location
     }
 
     private fun navigateToInfoEvent(event: Event) {
@@ -82,6 +91,69 @@ class HomeScreen : Fragment() {
         intent.putExtra("EVENT_NAME", event.name)
         startActivity(intent)
     }
+
+    private fun getUserLocation() {
+        // Retrieve logged-in user email from SharedPreferences
+        val loggedInUserEmail = sharedPreferences.getString("loggedInUserEmail", null)
+
+        if (loggedInUserEmail != null) {
+            // Replace dots in the email to ensure it's Firebase-safe
+            val safeEmail = loggedInUserEmail.replace(".", "_")
+
+            // Reference the Users node in Firebase
+            val usersRef = FirebaseDatabase.getInstance().getReference("Users")
+
+            // Search for the user with the given email
+            usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var userId: String? = null
+
+                    // Loop through all users to find the one matching the email
+                    for (userSnapshot in snapshot.children) {
+                        val email = userSnapshot.child("email").getValue(String::class.java)
+                        if (email == loggedInUserEmail) {
+                            userId = userSnapshot.key // Get the user ID
+                            break // Exit the loop once the user is found
+                        }
+                    }
+
+                    if (userId != null) {
+                        // Reference the user's locations field
+                        val dbref = FirebaseDatabase.getInstance().getReference("Users/$userId/locations")
+                        dbref.addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(locationSnapshot: DataSnapshot) {
+                                if (locationSnapshot.exists()) {
+                                    // Since 'locations' is stored as a string, get the value directly
+                                    val lastLocationName = locationSnapshot.getValue(String::class.java)
+
+                                    // Set the location in the TextView
+                                    locationTextView.text = lastLocationName ?: "No Locations Found"
+                                } else {
+                                    locationTextView.text = "No Locations Found"
+                                }
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                // Handle error
+                                locationTextView.text = "Error retrieving location"
+                            }
+                        })
+                    } else {
+                        locationTextView.text = "User not found"
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    // Handle error
+                    locationTextView.text = "Error retrieving user information"
+                }
+            })
+        } else {
+            locationTextView.text = "Email not found in SharedPreferences"
+        }
+    }
+
+
 
     private fun getUserData() {
         dbref = FirebaseDatabase.getInstance().getReference("events")
@@ -138,4 +210,8 @@ class HomeScreen : Fragment() {
             }
     }
 }
+
+
+
+
 
