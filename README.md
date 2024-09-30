@@ -1,2 +1,1 @@
-# EventAt
-Open Sourcing Coding(Intermediate): OPSC7312 POE. EventAt a comprehensive event management software for 
+See master branch for demonstration videos of how to use the application on a mobile android device
