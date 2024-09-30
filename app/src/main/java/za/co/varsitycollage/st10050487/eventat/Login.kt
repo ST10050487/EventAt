@@ -1,6 +1,7 @@
 package za.co.varsitycollage.st10050487.eventat
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Button
@@ -34,6 +35,15 @@ class Login : AppCompatActivity() {
         loginBtn = findViewById(R.id.login_btn)
         signUpText = findViewById(R.id.sign_up_text) // ID for Sign Up TextView
         forgotPasswordText = findViewById(R.id.forgot_password) // ID for Forgot Password TextView
+
+        // Disable the "Forgot Password" text and make it non-clickable
+        forgotPasswordText.isEnabled = false
+        forgotPasswordText.setTextColor(Color.GRAY) // You can change the color to make it look disabled
+
+        // Handle "Forgot Password" click to show a message
+        forgotPasswordText.setOnClickListener {
+            Toast.makeText(this, "Forgot Password is currently disabled", Toast.LENGTH_SHORT).show()
+        }
 
         loginBtn.setOnClickListener {
             val email = emailInput.text.toString().trim()
