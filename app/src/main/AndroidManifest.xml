@@ -32,6 +32,7 @@
             android:exported="false" />
         <activity
             android:name=".Registration"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".Signup"
