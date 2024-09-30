@@ -59,7 +59,8 @@ class GoogleMapsAPI : AppCompatActivity(), OnMapReadyCallback {
                         putExtra("selected_location", place.name)
                     }
                     setResult(RESULT_OK, resultIntent)
-                    finish() // Close the GoogleMapsAPI activity
+                    // Closing the GoogleMapsAPI activity
+                    finish()
                 }
             }
 
