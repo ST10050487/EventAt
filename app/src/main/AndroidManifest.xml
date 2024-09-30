@@ -63,7 +63,6 @@
         <activity android:name=".Login" />
         <activity android:name=".ManageProfile" />
         <activity android:name=".ChangePassword" />
-        <activity android:name=".Fragments.InfoEvent" />
         <activity android:name=".DisplayBioMetric" />
         <activity android:name=".BioMetricPromptManager" />
         <activity android:name=".EventInfoBooking" />
