@@ -19,6 +19,10 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class GoogleMapsAPI : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var googleMap: GoogleMap
@@ -43,26 +47,44 @@ class GoogleMapsAPI : AppCompatActivity(), OnMapReadyCallback {
         val autocompleteFragment = supportFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
         autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG))
 
+        // Get source from Intent
+        var source = intent.getStringExtra("source")
+
         // Set up PlaceSelectionListener
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
-                // Get the location of the selected place
+                Log.d("GoogleMapsAPI", "Place selected: ${place.name}")
                 val latLng = place.latLng
                 if (latLng != null) {
                     // Move the camera to the selected location
                     googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-                    // Optionally, add a marker at the selected location
                     googleMap.addMarker(MarkerOptions().position(latLng).title(place.name))
 
-                    // Return the selected location to CreateEvent
-                    val resultIntent = Intent().apply {
-                        putExtra("selected_location", place.name)
+                    // Log the source value
+                    Log.d("GoogleMapsAPI", "Source: $source")
+
+                    // Check for null source and set a fallback
+                    if (source == null) {
+                        Log.e("GoogleMapsAPI", "Source is null, defaulting to 'Unknown'")
+                        // You can assign a default value or handle the case as necessary
+                        source = "Unknown"
                     }
-                    setResult(RESULT_OK, resultIntent)
-                    finish() // Close the GoogleMapsAPI activity
+
+                    if (source == "CreateEvent") {
+                        // Return the selected location to CreateEvent
+                        val resultIntent = Intent().apply {
+                            putExtra("selected_location", place.name)
+                        }
+                        setResult(RESULT_OK, resultIntent)
+                        finish()
+                    } else if (source == "Login") {
+                        // Save the selected location in Firebase for the logged-in user
+                        saveLocationToFirebase(place.name)
+                        finish()
+
+                    }
                 }
             }
-
 
             override fun onError(status: com.google.android.gms.common.api.Status) {
                 Log.e("GoogleMapsAPI", "An error occurred: $status")
@@ -80,7 +102,6 @@ class GoogleMapsAPI : AppCompatActivity(), OnMapReadyCallback {
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 LOCATION_PERMISSION_REQUEST_CODE)
         }
-        // No need to call enableMyLocation here
     }
 
     @SuppressLint("MissingPermission")
@@ -114,5 +135,62 @@ class GoogleMapsAPI : AppCompatActivity(), OnMapReadyCallback {
         // Enabling location layer
         enableMyLocation()
     }
+
+    private fun saveLocationToFirebase(locationName: String) {
+        // Retrieve logged-in user email from SharedPreferences
+        val sharedPreferences = getSharedPreferences("userPrefs", MODE_PRIVATE)
+        val loggedInUserEmail = sharedPreferences.getString("loggedInUserEmail", null)
+
+        if (loggedInUserEmail != null) {
+            // Replace dots in the email with an underscore
+            val safeEmail = loggedInUserEmail.replace(".", "_")
+
+            // Assuming you have a Firebase reference set up to get user ID
+            val usersRef = FirebaseDatabase.getInstance().getReference("Users")
+            usersRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var userId: String? = null
+                    for (userSnapshot in snapshot.children) {
+                        val email = userSnapshot.child("email").getValue(String::class.java)
+                        if (email == loggedInUserEmail) {
+                            userId = userSnapshot.key // Get the user ID
+                            break // Exit loop once the user is found
+                        }
+                    }
+
+                    if (userId != null) {
+                        // Save location using user ID directly under "locations"
+                        val databaseReference = FirebaseDatabase.getInstance().getReference("Users/$userId/locations")
+
+                        // Save the location name directly, without using push()
+                        databaseReference.setValue(locationName)
+                            .addOnSuccessListener {
+                                Log.d("GoogleMapsAPI", "Location saved to Firebase successfully.")
+
+                                // Navigate to the Home class
+                                val intent = Intent(this@GoogleMapsAPI, Home::class.java)
+                                startActivity(intent)
+                                // Finish the current activity
+                                finish()
+                            }
+                            .addOnFailureListener { e ->
+                                Log.e("GoogleMapsAPI", "Failed to save location: ${e.message}")
+                            }
+                    } else {
+                        Log.e("GoogleMapsAPI", "User with email $loggedInUserEmail not found.")
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e("GoogleMapsAPI", "Error fetching users: ${error.message}")
+                }
+            })
+        } else {
+            Log.e("GoogleMapsAPI", "No logged-in user found.")
+        }
+    }
+
+
 }
+
 

@@ -201,19 +201,31 @@ public class InfoEvent extends Fragment {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Create a bundle with event data to pass to EventPromotion
+                Bundle bundle = new Bundle();
+                bundle.putString("eventTitle", eventTitle.getText().toString());
+                bundle.putString("eventPrice", eventPrice.getText().toString());
+                bundle.putString("eventDate", eventDate.getText().toString());
+                bundle.putString("eventAddress", eventAddress.getText().toString());
+                bundle.putString("eventTime", eventTime.getText().toString());
+                bundle.putString("eventWeather", eventWeather.getText().toString());
+                bundle.putString("eventParticipants", eventParticipants.getText().toString());
+
                 // Create an instance of EventPromotion fragment
                 EventPromotion eventPromotion = new EventPromotion();
+                eventPromotion.setArguments(bundle);  // Set the bundle with event data
 
                 // Use FragmentManager to replace the current fragment with EventPromotion
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_EventInfo_container, eventPromotion);
-                transaction.addToBackStack(null); // Add to back stack to allow back navigation
+                transaction.addToBackStack(null);  // Add to back stack to allow back navigation
                 transaction.commit();
             }
         });
     }
 
-private @NonNull View SendingBtnToTicketStage(View view) {
+
+    private @NonNull View SendingBtnToTicketStage(View view) {
     Button ticketSubmitButton = view.findViewById(R.id.EventSubmitButton);
     // Set an OnClickListener to handle the button click
     ticketSubmitButton.setOnClickListener(new View.OnClickListener() {

@@ -72,7 +72,8 @@ class CreateEvent : Fragment() {
     //Storing the selected image URI
     private val getImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         uri?.let {
-            imageUri = it // Save the selected image URI
+            // Saving the selected image URI
+            imageUri = it
             selectedImageView.visibility = View.VISIBLE
             selectedImageView.setImageURI(it)
         }
@@ -135,6 +136,8 @@ class CreateEvent : Fragment() {
         val createEventButton: MaterialButton = view.findViewById<MaterialButton>(R.id.create_btn)
         // Initializing the eventDateTextView
         eventDateTextView = view.findViewById(R.id.event_date)
+        //Finding and setting click listener for the reset button
+        val resetButton: MaterialButton = view.findViewById<MaterialButton>(R.id.reset_btn)
 
         // Setting up the Spinner for event categories
         val eventCategorySpinner: Spinner = view.findViewById(R.id.event_category)
@@ -160,7 +163,12 @@ class CreateEvent : Fragment() {
         // Setting up click listener for the event location TextView
         eventLocationTextView.setOnClickListener {
             val intent = Intent(requireContext(), GoogleMapsAPI::class.java)
+            intent.putExtra("source", "CreateEvent")
             getLocationLauncher.launch(intent)
+        }
+        // Setting up click listener for the reset button
+        resetButton.setOnClickListener{
+            resetFields()
         }
 
         // Disabling EditTexts based on RadioButton selection
@@ -297,10 +305,11 @@ class CreateEvent : Fragment() {
 
         if (paidEventRadioButton?.isChecked == true) {
             isPaidEvent = true
-            finalTicketPrice = ticketPrice // Use the entered ticket price for paid event
-        } else if (payAtEventRadioButton?.isChecked == true) {
+            finalTicketPrice = ticketPrice
+        }
+        if (payAtEventRadioButton?.isChecked == true) {
             isPaidEvent = true
-            finalTicketPriceAtVenue = ticketPriceAtVenue // Use the entered price for pay-at-venue event
+            finalTicketPriceAtVenue = ticketPriceAtVenue
         }
 
         // Create the Event object
@@ -330,6 +339,7 @@ class CreateEvent : Fragment() {
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 Toast.makeText(requireContext(), "Event saved successfully!", Toast.LENGTH_SHORT).show()
+                                resetFields()
                             } else {
                                 Toast.makeText(requireContext(), "Error saving event: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                             }
@@ -509,50 +519,55 @@ class CreateEvent : Fragment() {
         return isValid
     }
 
+    //A function to reset all input fields and error messages
+    private fun resetFields() {
+        // Reset TextViews and EditTexts
+        view?.findViewById<EditText>(R.id.event_name)?.text?.clear()
+        view?.findViewById<TextView>(R.id.event_date)?.text = ""
+        view?.findViewById<TextView>(R.id.start_time)?.text = ""
+        view?.findViewById<TextView>(R.id.end_time)?.text = ""
+        view?.findViewById<EditText>(R.id.attendees)?.text?.clear()
+        view?.findViewById<EditText>(R.id.event_details)?.text?.clear()
+        view?.findViewById<TextView>(R.id.event_location)?.text = ""
+
+        // Reset error messages
+        view?.findViewById<EditText>(R.id.event_name)?.error = null
+        view?.findViewById<TextView>(R.id.event_date)?.error = null
+        view?.findViewById<TextView>(R.id.start_time)?.error = null
+        view?.findViewById<TextView>(R.id.end_time)?.error = null
+        view?.findViewById<EditText>(R.id.attendees)?.error = null
+        view?.findViewById<TextView>(R.id.event_location)?.error = null
+
+        // Reset Spinner to the first option
+        view?.findViewById<Spinner>(R.id.event_category)?.setSelection(0)
+
+        // Uncheck RadioButtons
+        view?.findViewById<RadioButton>(R.id.free_event)?.isChecked = false
+        view?.findViewById<RadioButton>(R.id.paid_event)?.isChecked = false
+        view?.findViewById<RadioButton>(R.id.pay_at_event)?.isChecked = false
+
+        // Clear ticket price fields and disable them
+        val ticketPriceEditText = view?.findViewById<EditText>(R.id.ticket_price)
+        val ticketPriceAtVenueEditText = view?.findViewById<EditText>(R.id.ticket_price_at_venue)
+        ticketPriceEditText?.text?.clear()
+        ticketPriceAtVenueEditText?.text?.clear()
+        ticketPriceEditText?.isEnabled = false
+        ticketPriceAtVenueEditText?.isEnabled = false
+
+        // Clear image and video views
+        selectedImageView.visibility = View.GONE
+        selectedVideoView.visibility = View.GONE
+        imageUri = null
+        videoUri = null
+    }
+
+
     // Helper function to show error on TextView
     private fun showError(textView: TextView, errorMessage: String) {
         textView.error = errorMessage
         textView.setTextColor(Color.RED)
     }
 
-    // Helper function to clear errors when inputs are focused
-    private fun setupClearErrors(
-        eventNameEditText: EditText?,
-        startTimeTextView: TextView?,
-        endTimeTextView: TextView?,
-        eventDateTextView: TextView?,
-        eventLocationTextView: TextView?,
-        ticketNumberEditText: EditText?,
-        eventCategorySpinner: Spinner?
-    ) {
-        eventNameEditText?.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) eventNameEditText.error = null
-        }
-
-        startTimeTextView?.setOnClickListener {
-            startTimeTextView.error = null
-        }
-
-        endTimeTextView?.setOnClickListener {
-            endTimeTextView.error = null
-        }
-
-        eventDateTextView?.setOnClickListener {
-            eventDateTextView.error = null
-        }
-
-        eventLocationTextView?.setOnClickListener {
-            eventLocationTextView.error = null
-        }
-        ticketNumberEditText?.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) ticketNumberEditText.error = null
-        }
-        eventCategorySpinner?.let {
-            (it.selectedView as? TextView)?.setOnClickListener {
-                (it as TextView).error = null
-            }
-        }
-    }
 
     // Helper function to show a red toast message
     private fun showToast(message: String) {

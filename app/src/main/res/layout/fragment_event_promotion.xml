@@ -10,7 +10,6 @@
         android:id="@+id/heading"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_24sdp"
         android:gravity="center"
         android:text="Event Promotion"
         android:textAppearance="@style/supporting_"
@@ -18,9 +17,20 @@
         android:textSize="@dimen/_20ssp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteY="28dp"
+        tools:ignore="MissingConstraints" />
 
+    <Button
+        android:id="@+id/arrowButton"
+        android:layout_width="@dimen/_24sdp"
+        android:layout_height="@dimen/_27sdp"
+        android:background="@drawable/arrow"
+        tools:layout_editor_absoluteY="28dp"
+        tools:ignore="MissingConstraints"
+        android:enabled="false"
+        android:visibility="invisible"/>
 
     <TextView
         android:id="@+id/choose_a_so"
@@ -36,118 +46,66 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/heading" />
 
-    <FrameLayout
-        android:id="@+id/InstagramView"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_60sdp"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        android:background="@drawable/rectangleshape"
+    <TextView
+        android:id="@+id/instagram"
+        android:layout_width="306dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="76dp"
+        android:background="@drawable/rounded_textview"
+        android:drawableStart="@drawable/insta"
+        android:drawablePadding="16dp"
+        android:text="Instagram"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:layout_gravity="center"
+        app:iconSize="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/choose_a_so">
+        app:layout_constraintTop_toBottomOf="@+id/choose_a_so" />
 
-        <ImageView
-            android:id="@+id/instagram_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/_16sdp"
-            android:src="@drawable/insta" />
-
-        <Button
-            android:id="@+id/instagramTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/_52sdp"
-            android:background="?android:attr/selectableItemBackground"
-            android:gravity="center"
-            android:minHeight="0dp"
-            android:padding="0dp"
-            android:text="Instagram"
-            android:textAppearance="@style/support_1"
-            android:textColor="#000000"
-            android:textSize="@dimen/_18ssp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/instagram_icon" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/FacebookView"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_60sdp"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        android:background="@drawable/rectangleshape"
+    <TextView
+        android:id="@+id/twit"
+        android:layout_width="306dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/rounded_textview"
+        android:drawableStart="@drawable/twitter"
+        android:drawablePadding="16dp"
+        android:gravity="center_vertical"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:text="Twitter"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:iconSize="50dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/InstagramView">
+        app:layout_constraintTop_toBottomOf="@+id/instagram" />
 
-        <ImageView
-            android:id="@+id/facebook_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="16dp"
-            android:src="@drawable/facebook" />
-
-        <Button
-            android:id="@+id/facebookTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/_52sdp"
-            android:background="?android:attr/selectableItemBackground"
-            android:gravity="center"
-            android:minHeight="0dp"
-            android:padding="0dp"
-            android:text="Facebook"
-            android:textAppearance="@style/support_1"
-            android:textColor="#000000"
-            android:textSize="@dimen/_18ssp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/facebook_icon" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/TwitterView"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_60sdp"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        android:background="@drawable/rectangleshape"
+    <TextView
+        android:id="@+id/face_book"
+        android:layout_width="306dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/rounded_textview"
+        android:drawableStart="@drawable/facebook"
+        android:drawablePadding="16dp"
+        android:gravity="center_vertical"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:text="Facebook"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:iconSize="50dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/FacebookView">
-
-        <ImageView
-            android:id="@+id/twitter_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/_16sdp"
-            android:src="@drawable/twitter" />
-
-        <Button
-            android:id="@+id/twitterTxt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="@dimen/_52sdp"
-            android:background="?android:attr/selectableItemBackground"
-            android:gravity="center"
-            android:minHeight="0dp"
-            android:padding="0dp"
-            android:text="Twitter/X"
-            android:textAppearance="@style/support_1"
-            android:textColor="#000000"
-            android:textSize="@dimen/_18ssp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/twitter_icon" />
-    </FrameLayout>
+        app:layout_constraintTop_toBottomOf="@+id/twit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
